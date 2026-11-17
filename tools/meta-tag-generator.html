@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Meta Tag Generator - All Free Tools</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-slate-50">
+  <main class="max-w-4xl mx-auto mt-10 p-6">
+    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+      <h2 class="text-2xl font-bold text-slate-800 mb-2">Meta Tag Generator</h2>
+      <p class="text-slate-500 mb-6">Generate standard SEO meta tags for your website.</p>
+      
+    <input type="text" id="mTitle" class="w-full p-3 border border-slate-300 rounded mb-3" placeholder="Site Title">
+    <textarea id="mDesc" rows="2" class="w-full p-3 border border-slate-300 rounded mb-3" placeholder="Site Description"></textarea>
+    <input type="text" id="mKey" class="w-full p-3 border border-slate-300 rounded mb-3" placeholder="Keywords (comma separated)">
+    <input type="text" id="mAuth" class="w-full p-3 border border-slate-300 rounded mb-4" placeholder="Author Name">
+    <button onclick="genMeta()" class="w-full bg-blue-600 text-white px-4 py-3 rounded font-semibold hover:bg-blue-700">Generate Meta Tags</button>
+    <textarea id="mOut" rows="5" class="w-full p-3 border border-slate-300 rounded mt-4 bg-slate-50 font-mono text-sm" readonly></textarea>
+    <script>
+      function genMeta() {
+        let t = document.getElementById('mTitle').value;
+        let d = document.getElementById('mDesc').value;
+        let k = document.getElementById('mKey').value;
+        let a = document.getElementById('mAuth').value;
+        let out = '';
+        if(t) out += '<meta name="title" content="'+t+'">\n';
+        if(d) out += '<meta name="description" content="'+d+'">\n';
+        if(k) out += '<meta name="keywords" content="'+k+'">\n';
+        if(a) out += '<meta name="author" content="'+a+'">\n';
+        document.getElementById('mOut').value = out;
+      }
+    </script>
+  
+    </div>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>

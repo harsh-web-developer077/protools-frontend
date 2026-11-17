@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PDF to Base64 - All Free Tools</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-slate-50">
+  <main class="max-w-4xl mx-auto mt-10 p-6">
+    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+      <h2 class="text-2xl font-bold text-slate-800 mb-2">PDF to Base64</h2>
+      <p class="text-slate-500 mb-6">Convert a PDF file into a Base64 encoded string.</p>
+      
+    <input type="file" id="b64File" accept="application/pdf" class="w-full p-3 border border-slate-300 rounded mb-4">
+    <button onclick="toBase64()" class="w-full bg-red-600 text-white px-4 py-3 rounded font-semibold hover:bg-red-700">Convert to Base64</button>
+    <textarea id="b64Out" rows="5" class="w-full p-3 border border-slate-300 rounded mt-4 bg-slate-50 font-mono text-xs" readonly placeholder="Base64 string will appear here..."></textarea>
+    <script>
+      function toBase64() {
+        const file = document.getElementById('b64File').files[0];
+        if(!file) return;
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          document.getElementById('b64Out').value = reader.result;
+        };
+      }
+    </script>
+  
+    </div>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>

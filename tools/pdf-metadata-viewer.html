@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PDF Metadata Viewer - All Free Tools</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-slate-50">
+  <main class="max-w-4xl mx-auto mt-10 p-6">
+    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+      <h2 class="text-2xl font-bold text-slate-800 mb-2">PDF Metadata Viewer</h2>
+      <p class="text-slate-500 mb-6">Read hidden metadata (Title, Author, Creator) of a PDF.</p>
+      
+    <input type="file" id="mvFile" accept="application/pdf" class="w-full p-3 border border-slate-300 rounded mb-4">
+    <button onclick="viewMeta()" class="w-full bg-red-600 text-white px-4 py-3 rounded font-semibold hover:bg-red-700 mb-4">Read Metadata</button>
+    <div class="bg-slate-100 p-4 rounded border border-slate-200">
+      <p><b>Title:</b> <span id="mTitle">-</span></p>
+      <p><b>Author:</b> <span id="mAuthor">-</span></p>
+      <p><b>Creator:</b> <span id="mCreator">-</span></p>
+      <p><b>Producer:</b> <span id="mProducer">-</span></p>
+    </div>
+    <script>
+      async function viewMeta() {
+        const file = document.getElementById('mvFile').files[0];
+        if(!file) return;
+        const { PDFDocument } = PDFLib;
+        const pdf = await PDFDocument.load(await file.arrayBuffer());
+        document.getElementById('mTitle').innerText = pdf.getTitle() || 'None';
+        document.getElementById('mAuthor').innerText = pdf.getAuthor() || 'None';
+        document.getElementById('mCreator').innerText = pdf.getCreator() || 'None';
+        document.getElementById('mProducer').innerText = pdf.getProducer() || 'None';
+      }
+    </script>
+  
+    </div>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>

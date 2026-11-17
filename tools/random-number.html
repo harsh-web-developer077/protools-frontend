@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Random Number Generator - All Free Tools</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-slate-50">
+  <main class="max-w-3xl mx-auto mt-10 p-6">
+    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+      <h2 class="text-2xl font-bold text-slate-800 mb-2">Random Number Generator</h2>
+      <p class="text-slate-500 mb-6">Get a random number between two values.</p>
+      
+    <div class="flex gap-4 mb-4">
+      <input type="number" id="min" value="1" class="w-1/2 p-3 border border-slate-300 rounded" placeholder="Min">
+      <input type="number" id="max" value="100" class="w-1/2 p-3 border border-slate-300 rounded" placeholder="Max">
+    </div>
+    <h1 id="res" class="text-4xl font-bold text-center text-blue-600 my-6">-</h1>
+    <button onclick="roll()" class="w-full bg-blue-600 text-white px-4 py-3 rounded-lg font-semibold">Generate</button>
+    <script>
+      function roll() {
+        let min = parseInt(document.getElementById('min').value);
+        let max = parseInt(document.getElementById('max').value);
+        document.getElementById('res').innerText = Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+    </script>
+  
+    </div>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>

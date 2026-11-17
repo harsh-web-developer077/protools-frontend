@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PDF Metadata Editor - All Free Tools</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-slate-50">
+  <main class="max-w-4xl mx-auto mt-10 p-6">
+    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+      <h2 class="text-2xl font-bold text-slate-800 mb-2">PDF Metadata Editor</h2>
+      <p class="text-slate-500 mb-6">Modify or remove PDF metadata properties.</p>
+      
+    <input type="file" id="meFile" accept="application/pdf" class="w-full p-3 border border-slate-300 rounded mb-4">
+    <input type="text" id="neTitle" placeholder="New Title" class="w-full p-3 border border-slate-300 rounded mb-2">
+    <input type="text" id="neAuthor" placeholder="New Author" class="w-full p-3 border border-slate-300 rounded mb-4">
+    <button onclick="editMeta()" class="w-full bg-red-600 text-white px-4 py-3 rounded font-semibold hover:bg-red-700">Update Metadata & Save</button>
+    <script>
+      
+  function downloadPDF(bytes, filename) {
+    const blob = new Blob([bytes], { type: 'application/pdf' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+  }
+
+      async function editMeta() {
+        const file = document.getElementById('meFile').files[0];
+        if(!file) return alert('Select file.');
+        const { PDFDocument } = PDFLib;
+        const pdf = await PDFDocument.load(await file.arrayBuffer());
+        
+        let t = document.getElementById('neTitle').value;
+        let a = document.getElementById('neAuthor').value;
+        if(t) pdf.setTitle(t);
+        if(a) pdf.setAuthor(a);
+        
+        downloadPDF(await pdf.save(), 'meta-updated.pdf');
+      }
+    </script>
+  
+    </div>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>

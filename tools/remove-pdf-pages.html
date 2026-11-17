@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Remove PDF Pages - All Free Tools</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-slate-50">
+  <main class="max-w-4xl mx-auto mt-10 p-6">
+    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+      <h2 class="text-2xl font-bold text-slate-800 mb-2">Remove PDF Pages</h2>
+      <p class="text-slate-500 mb-6">Delete a specific page from your PDF document.</p>
+      
+    <input type="file" id="rmFile" accept="application/pdf" class="w-full p-3 border border-slate-300 rounded mb-4">
+    <input type="number" id="rmPage" placeholder="Page Number to remove (e.g. 2)" class="w-full p-3 border border-slate-300 rounded mb-4">
+    <button onclick="removePage()" class="w-full bg-red-600 text-white px-4 py-3 rounded font-semibold hover:bg-red-700">Remove Page & Save</button>
+    <script>
+      
+  function downloadPDF(bytes, filename) {
+    const blob = new Blob([bytes], { type: 'application/pdf' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+  }
+
+      async function removePage() {
+        const file = document.getElementById('rmFile').files[0];
+        let pNum = parseInt(document.getElementById('rmPage').value);
+        if(!file || !pNum) return alert('Provide file and page number.');
+        
+        const { PDFDocument } = PDFLib;
+        const pdf = await PDFDocument.load(await file.arrayBuffer());
+        if(pNum < 1 || pNum > pdf.getPageCount()) return alert('Invalid page number.');
+        
+        pdf.removePage(pNum - 1); // 0-indexed
+        downloadPDF(await pdf.save(), 'page-removed.pdf');
+      }
+    </script>
+  
+    </div>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>

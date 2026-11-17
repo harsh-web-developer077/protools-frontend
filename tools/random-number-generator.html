@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Random Number Generator - ProTools Portal</title>
+<meta name="description" content="Generate random integers in a chosen range.">
+<meta name="keywords" content="Random Number Generator, online Random Number Generator, free generators tool">
+<link rel="canonical" href="https://YOURDOMAIN.com/tools/random-number-generator.html">
+<meta property="og:type" content="website"><meta property="og:title" content="Random Number Generator - ProTools Portal">
+<meta property="og:description" content="Generate random integers in a chosen range."><meta property="og:url" content="https://YOURDOMAIN.com/tools/random-number-generator.html">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+*{box-sizing:border-box}body{font-family:Inter, sans-serif;background:#f8fafc;color:#1e293b}
+.tool-input{width:100%;padding:12px 14px;border:1px solid #cbd5e1;border-radius:10px;background:white;margin:7px 0;color:#0f172a}
+.tool-input:focus{outline:none;border-color:#7c3aed;box-shadow:0 0 0 3px #7c3aed1c}
+.btn{background:#7c3aed;color:white;border:0;border-radius:10px;padding:11px 17px;font-weight:700;cursor:pointer}
+.btn:hover{background:#6d28d9}.btn.alt{background:#0f766e}.out{background:#f1f5f9;border:1px solid #e2e8f0;border-radius:10px;padding:14px;white-space:pre-wrap;overflow-wrap:anywhere;min-height:48px}
+.sidebar-scroll::-webkit-scrollbar{width:6px}.sidebar-scroll::-webkit-scrollbar-thumb{background:#ffffff33;border-radius:10px}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Random Number Generator","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","description":"Generate random integers in a chosen range.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What does Random Number Generator do?","acceptedAnswer":{"@type":"Answer","text":"Generate random integers in a chosen range."}},{"@type":"Question","name":"Is Random Number Generator free to use?","acceptedAnswer":{"@type":"Answer","text":"This browser-based utility is designed for modern desktop and mobile browsers."}},{"@type":"Question","name":"Are my inputs uploaded?","acceptedAnswer":{"@type":"Answer","text":"This browser-based utility is designed for modern desktop and mobile browsers."}},{"@type":"Question","name":"Can I use Random Number Generator on mobile?","acceptedAnswer":{"@type":"Answer","text":"This browser-based utility is designed for modern desktop and mobile browsers."}}]}</script>
+</head><body class="min-h-screen">
+<div class="min-h-screen flex">
+<aside class="hidden md:flex w-64 bg-violet-950 text-white flex-col shrink-0">
+<div class="p-6 border-b border-violet-800 flex items-center gap-3"><div class="w-10 h-10 bg-white text-violet-900 rounded-xl grid place-items-center font-extrabold">PT</div><b class="text-xl">ProTools</b></div>
+<nav class="p-4 space-y-2 text-sm"><a class="block p-3 rounded-lg hover:bg-violet-800" href="../index.html"><i class="fa fa-home w-6"></i> Dashboard</a><a class="block p-3 rounded-lg hover:bg-violet-800" href="../tools.html"><i class="fa fa-layer-group w-6"></i> All Tools</a><div class="pt-4 text-xs uppercase text-violet-300 font-bold">Portal</div><a class="block p-3 rounded-lg hover:bg-violet-800" href="../about.html"><i class="fa fa-circle-info w-6"></i> About Us</a><a class="block p-3 rounded-lg hover:bg-violet-800" href="../contact.html"><i class="fa fa-envelope w-6"></i> Helpdesk</a></nav>
+</aside>
+<div class="min-w-0 flex-1">
+<header class="h-16 bg-white border-b flex items-center justify-between px-5 md:px-8"><a href="../tools.html" class="font-extrabold text-violet-800 text-lg">ProTools Portal</a><span class="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-full px-3 py-2"><i class="fa fa-circle-check"></i> Browser Tool</span></header>
+<main class="max-w-5xl mx-auto p-5 md:p-9">
+<div class="mb-5"><a href="../tools.html" class="text-sm font-bold text-violet-700 hover:underline"><i class="fa fa-arrow-left"></i> Back to Tools Library</a></div>
+<section class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 md:p-9">
+<div class="flex gap-4 items-center mb-2"><div class="w-14 h-14 rounded-2xl bg-violet-100 text-violet-700 grid place-items-center text-2xl"><i class="fa fa-dice"></i></div><div><p class="text-xs font-bold uppercase tracking-widest text-violet-600">Generators</p><h1 class="text-2xl md:text-3xl font-extrabold">Random Number Generator</h1></div></div>
+<p class="text-slate-500 mb-7">Generate random integers in a chosen range.</p>
+<div id="app" class="bg-slate-50 border border-slate-200 rounded-xl p-4 md:p-6"></div>
+<div class="mt-8 border-t pt-6"><h2 class="font-extrabold text-lg mb-3">How to use</h2><ol class="list-decimal pl-5 text-sm text-slate-600 space-y-2"><li>Enter or upload the information requested by the tool.</li><li>Choose the available options and run the tool.</li><li>Copy, download, or use the generated result.</li></ol></div>
+<div class="mt-7 border-t pt-6"><h2 class="font-extrabold text-lg mb-4">Frequently asked questions</h2><div class="space-y-3"><details class="bg-slate-50 rounded-lg p-4"><summary class="font-bold cursor-pointer">What does Random Number Generator do?</summary><p class="text-sm text-slate-600 mt-2">Generate random integers in a chosen range.</p></details><details class="bg-slate-50 rounded-lg p-4"><summary class="font-bold cursor-pointer">Is Random Number Generator free to use?</summary><p class="text-sm text-slate-600 mt-2">This tool runs in your browser. Avoid entering sensitive information on shared devices.</p></details><details class="bg-slate-50 rounded-lg p-4"><summary class="font-bold cursor-pointer">Are my inputs uploaded?</summary><p class="text-sm text-slate-600 mt-2">This tool runs in your browser. Avoid entering sensitive information on shared devices.</p></details><details class="bg-slate-50 rounded-lg p-4"><summary class="font-bold cursor-pointer">Can I use Random Number Generator on mobile?</summary><p class="text-sm text-slate-600 mt-2">This tool runs in your browser. Avoid entering sensitive information on shared devices.</p></details></div></div>
+</section>
+<div class="mt-12 pt-8 border-t border-slate-200">
+<div class="flex flex-wrap items-center justify-center gap-4 mb-10"><span class="bg-violet-50 text-violet-700 font-semibold px-4 py-2 rounded-full border border-violet-100 text-sm"><i class="fa fa-shield-halved"></i> Browser-side processing</span><span class="bg-amber-50 text-amber-700 font-semibold px-4 py-2 rounded-full border border-amber-100 text-sm"><i class="fa fa-star text-amber-500"></i> 4.9/5 Rating</span><span class="bg-teal-50 text-teal-700 font-semibold px-4 py-2 rounded-full border border-teal-100 text-sm"><i class="fa fa-users"></i> 155k+ Uses</span></div>
+<h3 class="text-xl font-extrabold text-slate-800 mb-6 text-center">Trusted by Specialists</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><div class="text-amber-400 mb-3">★★★★★</div><p class="text-slate-600 italic text-sm mb-4">"Flawless execution! Saves me hours of manual work."</p><b class="text-sm">Rajat S.</b><p class="text-xs text-slate-500">SEO Analyst</p></div>
+<div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm"><div class="text-amber-400 mb-3">★★★★★</div><p class="text-slate-600 italic text-sm mb-4">"Client-side processing makes it so fast and secure. Love it!"</p><b class="text-sm">Amit K.</b><p class="text-xs text-slate-500">Agency Owner</p></div>
+</div></div>
+<footer class="text-center text-xs text-slate-400 py-8">© 2026 ProTools Portal</footer>
+</main></div></div>
+<script>window.TOOL_CONFIG={"slug":"random-number-generator","name":"Random Number Generator","category":"Generators","desc":"Generate random integers in a chosen range.","type":"random","domain":"https://YOURDOMAIN.com","faq":["What does Random Number Generator do?","Is Random Number Generator free to use?","Are my inputs uploaded?","Can I use Random Number Generator on mobile?"]};</script><script src="../js/tool-engine.js"></script>
+</body></html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Blank Page - All Free Tools</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-slate-50">
+  <main class="max-w-4xl mx-auto mt-10 p-6">
+    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+      <h2 class="text-2xl font-bold text-slate-800 mb-2">Add Blank Page</h2>
+      <p class="text-slate-500 mb-6">Insert a blank page at the end of your PDF.</p>
+      
+    <input type="file" id="bFile" accept="application/pdf" class="w-full p-3 border border-slate-300 rounded mb-4">
+    <button onclick="addBlank()" class="w-full bg-red-600 text-white px-4 py-3 rounded font-semibold hover:bg-red-700">Add Page & Download</button>
+    <script>
+      
+  function downloadPDF(bytes, filename) {
+    const blob = new Blob([bytes], { type: 'application/pdf' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+  }
+
+      async function addBlank() {
+        const file = document.getElementById('bFile').files[0];
+        if(!file) return alert('Select a file.');
+        const { PDFDocument } = PDFLib;
+        const pdf = await PDFDocument.load(await file.arrayBuffer());
+        pdf.addPage();
+        downloadPDF(await pdf.save(), 'added-blank-page.pdf');
+      }
+    </script>
+  
+    </div>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Open Graph Generator - All Free Tools</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-slate-50">
+  <main class="max-w-4xl mx-auto mt-10 p-6">
+    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+      <h2 class="text-2xl font-bold text-slate-800 mb-2">Open Graph Generator</h2>
+      <p class="text-slate-500 mb-6">Create OG tags for perfect Facebook/Twitter link sharing.</p>
+      
+    <input type="text" id="ogT" class="w-full p-2 border rounded mb-2" placeholder="OG Title">
+    <input type="text" id="ogD" class="w-full p-2 border rounded mb-2" placeholder="OG Description">
+    <input type="text" id="ogI" class="w-full p-2 border rounded mb-2" placeholder="Image URL (https://...)">
+    <input type="text" id="ogU" class="w-full p-2 border rounded mb-4" placeholder="Page URL">
+    <button onclick="genOG()" class="w-full bg-blue-600 text-white py-2 rounded font-semibold">Generate OG Tags</button>
+    <textarea id="ogOut" rows="5" class="w-full p-3 border rounded mt-4 bg-slate-50 font-mono text-sm" readonly></textarea>
+    <script>
+      function genOG() {
+        let t=document.getElementById('ogT').value, d=document.getElementById('ogD').value;
+        let i=document.getElementById('ogI').value, u=document.getElementById('ogU').value;
+        let out = '';
+        if(t) out += '<meta property="og:title" content="'+t+'" />\n';
+        if(d) out += '<meta property="og:description" content="'+d+'" />\n';
+        if(i) out += '<meta property="og:image" content="'+i+'" />\n';
+        if(u) out += '<meta property="og:url" content="'+u+'" />\n';
+        out += '<meta property="og:type" content="website" />';
+        document.getElementById('ogOut').value = out;
+      }
+    </script>
+  
+    </div>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>

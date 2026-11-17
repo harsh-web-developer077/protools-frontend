@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FAQ Schema Generator - All Free Tools</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-slate-50">
+  <main class="max-w-4xl mx-auto mt-10 p-6">
+    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+      <h2 class="text-2xl font-bold text-slate-800 mb-2">FAQ Schema Generator</h2>
+      <p class="text-slate-500 mb-6">Create JSON-LD FAQ schema for Google Rich Snippets.</p>
+      
+    <div id="qList">
+      <div class="mb-4 border p-3 rounded bg-slate-50 q-block">
+        <input type="text" class="w-full p-2 border rounded mb-2 q-val" placeholder="Question?">
+        <textarea rows="2" class="w-full p-2 border rounded a-val" placeholder="Answer..."></textarea>
+      </div>
+    </div>
+    <button onclick="addQ()" class="text-blue-600 font-semibold mb-4 text-sm">+ Add Another Question</button>
+    <button onclick="genFAQ()" class="w-full bg-blue-600 text-white py-2 rounded font-semibold">Generate JSON-LD</button>
+    <textarea id="fOut" rows="6" class="w-full p-3 border rounded mt-4 bg-slate-50 font-mono text-sm" readonly></textarea>
+    <script>
+      function addQ() {
+        let d = document.createElement('div');
+        d.className = 'mb-4 border p-3 rounded bg-slate-50 q-block';
+        d.innerHTML = '<input type="text" class="w-full p-2 border rounded mb-2 q-val" placeholder="Question?"><textarea rows="2" class="w-full p-2 border rounded a-val" placeholder="Answer..."></textarea>';
+        document.getElementById('qList').appendChild(d);
+      }
+      function genFAQ() {
+        let blocks = document.querySelectorAll('.q-block');
+        let arr = [];
+        blocks.forEach(b => {
+          let q = b.querySelector('.q-val').value;
+          let a = b.querySelector('.a-val').value;
+          if(q && a) arr.push({"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}});
+        });
+        if(!arr.length) return;
+        let schema = { "@context": "https://schema.org", "@type": "FAQPage", "mainEntity": arr };
+        document.getElementById('fOut').value = '<script type="application/ld+json">\n' + JSON.stringify(schema, null, 2) + '\n<\/script>';
+      }
+    </script>
+  
+    </div>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>

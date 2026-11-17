@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Robots.txt Generator - All Free Tools</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="bg-slate-50">
+  <main class="max-w-4xl mx-auto mt-10 p-6">
+    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
+      <h2 class="text-2xl font-bold text-slate-800 mb-2">Robots.txt Generator</h2>
+      <p class="text-slate-500 mb-6">Quickly generate a robots.txt file to guide search engines.</p>
+      
+    <div class="grid grid-cols-2 gap-4 mb-4">
+      <div>
+        <label class="block text-sm mb-1">Default Access</label>
+        <select id="rAccess" class="w-full p-3 border border-slate-300 rounded"><option value="Allow">Allow All</option><option value="Disallow">Disallow All</option></select>
+      </div>
+      <div>
+        <label class="block text-sm mb-1">Sitemap URL (Optional)</label>
+        <input type="text" id="rSitemap" class="w-full p-3 border border-slate-300 rounded" placeholder="https://domain.com/sitemap.xml">
+      </div>
+    </div>
+    <label class="block text-sm mb-1">Disallow Directories (comma separated)</label>
+    <input type="text" id="rDirs" class="w-full p-3 border border-slate-300 rounded mb-4" placeholder="/cgi-bin/, /admin/">
+    <button onclick="genRobots()" class="w-full bg-blue-600 text-white px-4 py-3 rounded font-semibold hover:bg-blue-700">Generate</button>
+    <textarea id="rOut" rows="5" class="w-full p-3 border border-slate-300 rounded mt-4 bg-slate-50 font-mono text-sm" readonly></textarea>
+    <script>
+      function genRobots() {
+        let acc = document.getElementById('rAccess').value;
+        let sm = document.getElementById('rSitemap').value;
+        let dirs = document.getElementById('rDirs').value.split(',');
+        let out = "User-agent: *\n";
+        if(acc === 'Disallow') { out += "Disallow: /\n"; } else {
+          dirs.forEach(d => { if(d.trim()) out += "Disallow: " + d.trim() + "\n"; });
+        }
+        if(sm) out += "\nSitemap: " + sm;
+        document.getElementById('rOut').value = out;
+      }
+    </script>
+  
+    </div>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>

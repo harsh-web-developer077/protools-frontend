@@ -1,0 +1,188 @@
+/* PROTOOLS PREMIUM DARK PURPLE THEME */
+:root {
+  color-scheme: dark;
+  --pt-bg: #0b0718;
+  --pt-surface: #151027;
+  --pt-card: #1c1532;
+  --pt-border: #382858;
+  --pt-text: #f5f0ff;
+  --pt-muted: #b8aeca;
+  --pt-primary: #8b5cf6;
+  --pt-light: #a78bfa;
+}
+
+html {
+  background: var(--pt-bg) !important;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: radial-gradient(ellipse at top, #21133f 0%, #0b0718 55%) !important;
+  color: var(--pt-text) !important;
+  font-family: Inter, "Segoe UI", sans-serif !important;
+}
+
+body, body * {
+  scrollbar-color: #62449b #120d20;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #f5f0ff !important;
+}
+
+p, label, li, span {
+  text-shadow: none;
+}
+
+.text-slate-900, .text-slate-800, .text-slate-700,
+.text-gray-900, .text-gray-800, .text-gray-700 {
+  color: #f0eaff !important;
+}
+
+.text-slate-600, .text-slate-500, .text-gray-600,
+.text-gray-500 {
+  color: #b8aeca !important;
+}
+
+.bg-white, .bg-slate-50, .bg-slate-100,
+.bg-gray-50, .bg-gray-100 {
+  background-color: var(--pt-surface) !important;
+}
+
+.border, .border-slate-100, .border-slate-200,
+.border-slate-300, .border-gray-200 {
+  border-color: var(--pt-border) !important;
+}
+
+header, nav {
+  background-color: rgba(18, 12, 34, .94) !important;
+  border-color: var(--pt-border) !important;
+  backdrop-filter: blur(16px);
+}
+
+.card, .tool-box, .tool-card, .out,
+#app, .faq-item, details {
+  background: var(--pt-card) !important;
+  color: var(--pt-text) !important;
+  border: 1px solid var(--pt-border) !important;
+  border-radius: 16px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, .22);
+}
+
+.card, .tool-card {
+  transition: transform .25s ease, border-color .25s ease,
+              box-shadow .25s ease;
+}
+
+.card:hover, .tool-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--pt-primary) !important;
+  box-shadow: 0 12px 35px rgba(139, 92, 246, .18);
+}
+
+input, textarea, select,
+.tool-input {
+  background: #100b1e !important;
+  color: #f5f0ff !important;
+  border: 1px solid #443263 !important;
+  border-radius: 10px !important;
+  padding: 12px 14px !important;
+  outline: none;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #827795 !important;
+}
+
+input:focus, textarea:focus, select:focus,
+.tool-input:focus {
+  border-color: var(--pt-light) !important;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, .18) !important;
+}
+
+input[type="file"] {
+  background: #100b1e !important;
+  border: 1px dashed #7656ad !important;
+  padding: 14px !important;
+}
+
+button, .btn {
+  background: linear-gradient(135deg, #7c3aed, #9333ea) !important;
+  color: white !important;
+  border: 1px solid #a78bfa !important;
+  border-radius: 10px !important;
+  padding: 11px 18px !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease,
+              filter .2s ease;
+}
+
+button:hover, .btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.12);
+  box-shadow: 0 8px 24px rgba(139, 92, 246, .3);
+}
+
+.btn.alt {
+  background: linear-gradient(135deg, #4c1d95, #6d28d9) !important;
+}
+
+a {
+  color: #c4a7ff;
+  transition: color .2s ease;
+}
+
+a:hover {
+  color: #ffffff;
+}
+
+.out, pre, code {
+  color: #e9ddff !important;
+}
+
+pre, code {
+  background-color: #100b1e !important;
+  border-color: var(--pt-border) !important;
+  border-radius: 10px;
+}
+
+table {
+  background: var(--pt-surface) !important;
+  color: var(--pt-text) !important;
+  border-color: var(--pt-border) !important;
+}
+
+th, td {
+  border-color: var(--pt-border) !important;
+}
+
+hr {
+  border-color: var(--pt-border) !important;
+}
+
+footer {
+  background: #100b1e !important;
+  border-color: var(--pt-border) !important;
+  color: var(--pt-muted) !important;
+}
+
+::selection {
+  background: #7c3aed;
+  color: white;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  .tool-box, .card {
+    padding: 18px !important;
+  }
+
+  button, .btn {
+    max-width: 100%;
+  }
+}

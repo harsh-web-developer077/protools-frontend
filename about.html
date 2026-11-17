@@ -1,0 +1,466 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090817">
+  <meta name="description" content="Discover ProTools, a collection of useful online productivity and utility tools.">
+  <title>About Us | ProTools</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #090817;
+      color: #f8fafc;
+    }
+
+    .gradient-text {
+      background: linear-gradient(90deg, #c4b5fd, #818cf8, #e879f9);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .glass {
+      background: rgba(255,255,255,.045);
+      border: 1px solid rgba(255,255,255,.09);
+      backdrop-filter: blur(16px);
+    }
+
+    .gradient-button {
+      background: linear-gradient(135deg, #7c3aed, #6366f1);
+      transition: .25s ease;
+    }
+
+    .gradient-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(124,58,237,.3);
+    }
+
+    .glow {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: .16;
+      pointer-events: none;
+    }
+
+    .feature-card {
+      transition: .3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(167,139,250,.4);
+      background: rgba(139,92,246,.08);
+    }
+
+    .step-line {
+      background: linear-gradient(90deg, #7c3aed, #6366f1, #c084fc);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen">
+
+  <!-- Background Effects -->
+  <div class="glow bg-violet-600 top-20 -left-32"></div>
+  <div class="glow bg-indigo-600 top-96 -right-32"></div>
+
+  <!-- Navbar -->
+  <header class="relative z-20 border-b border-white/10 bg-[#090817]/85 backdrop-blur-xl sticky top-0">
+    <div class="max-w-7xl mx-auto px-5 md:px-8 h-20 flex items-center justify-between">
+
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-xl gradient-button flex items-center justify-center text-white font-black text-lg">
+          PT
+        </div>
+        <span class="text-xl font-extrabold tracking-tight">
+          Pro<span class="gradient-text">Tools</span>
+        </span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+        <a href="index.html" class="hover:text-white transition">Home</a>
+        <a href="index.html#general" class="hover:text-white transition">Tools</a>
+        <a href="membership.html" class="hover:text-white transition">Membership</a>
+        <a href="about.html" class="text-violet-300">About</a>
+        <a href="contact.html" class="hover:text-white transition">Contact</a>
+      </nav>
+
+      <a href="membership.html" class="hidden sm:inline-flex gradient-button px-5 py-2.5 rounded-xl text-sm font-bold">
+        Explore Pro <i class="fas fa-arrow-right ml-2"></i>
+      </a>
+
+      <button id="menuButton" class="md:hidden text-white text-xl p-2" aria-label="Open navigation" aria-expanded="false">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <nav id="mobileMenu" class="hidden md:hidden px-5 pb-5 border-t border-white/10">
+      <a href="index.html" class="block py-3 text-slate-300">Home</a>
+      <a href="index.html#general" class="block py-3 text-slate-300">Tools</a>
+      <a href="membership.html" class="block py-3 text-slate-300">Membership</a>
+      <a href="about.html" class="block py-3 text-violet-300">About</a>
+      <a href="contact.html" class="block py-3 text-slate-300">Contact</a>
+    </nav>
+  </header>
+
+  <main class="relative z-10">
+
+    <!-- Hero Section -->
+    <section class="max-w-7xl mx-auto px-5 md:px-8 pt-24 pb-20 text-center">
+
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-violet-400/20 bg-violet-500/10 text-violet-300 text-xs font-bold mb-8">
+        <i class="fas fa-sparkles"></i>
+        GET TO KNOW US
+      </div>
+
+      <h1 class="text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-tight mb-7">
+        Everything You Need.
+        <br>
+        <span class="gradient-text">One Powerful Platform.</span>
+      </h1>
+
+      <p class="max-w-3xl mx-auto text-slate-400 text-base md:text-lg leading-8">
+        Welcome to ProTools — a platform designed to bring useful digital
+        utilities together and make everyday online tasks simpler, faster,
+        and more convenient.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-4 mt-10">
+        <a href="index.html" class="gradient-button px-7 py-3.5 rounded-xl font-bold">
+          Explore Tools <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+
+        <a href="contact.html" class="glass px-7 py-3.5 rounded-xl font-bold hover:bg-white/10 transition">
+          Contact Us
+        </a>
+      </div>
+
+      <!-- Hero Visual -->
+      <div class="max-w-4xl mx-auto mt-20 glass rounded-3xl p-5 md:p-8">
+        <div class="flex items-center gap-2 border-b border-white/10 pb-5 mb-7">
+          <span class="w-3 h-3 bg-red-400 rounded-full"></span>
+          <span class="w-3 h-3 bg-yellow-400 rounded-full"></span>
+          <span class="w-3 h-3 bg-emerald-400 rounded-full"></span>
+          <span class="ml-3 text-xs text-slate-500">ProTools Workspace</span>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+          <div class="rounded-2xl bg-violet-500/10 border border-violet-400/15 p-5 text-center">
+            <i class="fas fa-file-alt text-3xl text-violet-300 mb-4"></i>
+            <p class="text-sm font-bold">Document Tools</p>
+          </div>
+
+          <div class="rounded-2xl bg-indigo-500/10 border border-indigo-400/15 p-5 text-center">
+            <i class="fas fa-chart-line text-3xl text-indigo-300 mb-4"></i>
+            <p class="text-sm font-bold">SEO Utilities</p>
+          </div>
+
+          <div class="rounded-2xl bg-fuchsia-500/10 border border-fuchsia-400/15 p-5 text-center">
+            <i class="fas fa-image text-3xl text-fuchsia-300 mb-4"></i>
+            <p class="text-sm font-bold">Image Tools</p>
+          </div>
+
+          <div class="rounded-2xl bg-cyan-500/10 border border-cyan-400/15 p-5 text-center">
+            <i class="fas fa-bolt text-3xl text-cyan-300 mb-4"></i>
+            <p class="text-sm font-bold">Quick Utilities</p>
+          </div>
+
+        </div>
+
+        <div class="mt-7 rounded-2xl bg-white/5 p-5 text-left">
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-sm font-bold">Your Digital Workspace</span>
+            <span class="text-xs text-emerald-400">
+              <i class="fas fa-circle text-[7px] mr-1"></i> Designed for convenience
+            </span>
+          </div>
+          <div class="h-2 rounded-full bg-white/10 overflow-hidden">
+            <div class="h-full w-3/4 rounded-full step-line"></div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- About Section -->
+    <section class="max-w-7xl mx-auto px-5 md:px-8 py-20">
+
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+        <div>
+          <span class="text-violet-300 text-xs font-bold tracking-widest uppercase">
+            WHO WE ARE
+          </span>
+
+          <h2 class="text-3xl md:text-4xl font-extrabold mt-4 mb-6 leading-tight">
+            Making Digital Work
+            <span class="gradient-text">More Convenient.</span>
+          </h2>
+
+          <p class="text-slate-400 leading-8 mb-5">
+            ProTools is built around a simple idea: everyday digital tasks
+            should be easier to complete. Instead of switching between
+            multiple websites, users can discover different utilities
+            through one organized platform.
+          </p>
+
+          <p class="text-slate-400 leading-8">
+            Whether you are working with documents, exploring SEO utilities,
+            or looking for quick productivity features, ProTools aims to
+            provide a convenient starting point for your workflow.
+          </p>
+        </div>
+
+        <div class="glass rounded-3xl p-7 md:p-9">
+
+          <div class="w-16 h-16 rounded-2xl gradient-button flex items-center justify-center text-3xl mb-7">
+            <i class="fas fa-layer-group"></i>
+          </div>
+
+          <h3 class="text-2xl font-extrabold mb-4">
+            One Platform. Multiple Possibilities.
+          </h3>
+
+          <p class="text-slate-400 leading-8 mb-7">
+            Our focus is on usability, organized tools, and a clean digital
+            experience that helps users get started without unnecessary complexity.
+          </p>
+
+          <div class="space-y-4">
+            <div class="flex items-center gap-3">
+              <i class="fas fa-check-circle text-emerald-400"></i>
+              <span class="text-sm text-slate-300">Simple and organized interface</span>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <i class="fas fa-check-circle text-emerald-400"></i>
+              <span class="text-sm text-slate-300">Multiple utility categories</span>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <i class="fas fa-check-circle text-emerald-400"></i>
+              <span class="text-sm text-slate-300">Designed for different workflows</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-20 border-y border-white/5 bg-white/[0.015]">
+      <div class="max-w-7xl mx-auto px-5 md:px-8">
+
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <span class="text-violet-300 text-xs font-bold tracking-widest uppercase">
+            WHY PROTOOLS
+          </span>
+
+          <h2 class="text-3xl md:text-4xl font-extrabold mt-4 mb-5">
+            Built Around <span class="gradient-text">Your Workflow</span>
+          </h2>
+
+          <p class="text-slate-400 leading-7">
+            A useful digital workspace should be easy to navigate,
+            practical to use, and organized around real tasks.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+          <div class="feature-card glass rounded-2xl p-7">
+            <div class="w-12 h-12 rounded-xl bg-violet-500/15 text-violet-300 flex items-center justify-center text-xl mb-6">
+              <i class="fas fa-bolt"></i>
+            </div>
+            <h3 class="text-lg font-bold mb-3">Convenient Workflow</h3>
+            <p class="text-sm text-slate-400 leading-7">
+              Find useful utilities in one organized place and reduce unnecessary switching between websites.
+            </p>
+          </div>
+
+          <div class="feature-card glass rounded-2xl p-7">
+            <div class="w-12 h-12 rounded-xl bg-indigo-500/15 text-indigo-300 flex items-center justify-center text-xl mb-6">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3 class="text-lg font-bold mb-3">Privacy Awareness</h3>
+            <p class="text-sm text-slate-400 leading-7">
+              Tool-specific processing methods determine how information is handled. Always check individual tool details before submitting sensitive data.
+            </p>
+          </div>
+
+          <div class="feature-card glass rounded-2xl p-7">
+            <div class="w-12 h-12 rounded-xl bg-fuchsia-500/15 text-fuchsia-300 flex items-center justify-center text-xl mb-6">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3 class="text-lg font-bold mb-3">Responsive Experience</h3>
+            <p class="text-sm text-slate-400 leading-7">
+              A layout designed to adapt to desktop, tablet, and mobile screens.
+            </p>
+          </div>
+
+          <div class="feature-card glass rounded-2xl p-7">
+            <div class="w-12 h-12 rounded-xl bg-cyan-500/15 text-cyan-300 flex items-center justify-center text-xl mb-6">
+              <i class="fas fa-th-large"></i>
+            </div>
+            <h3 class="text-lg font-bold mb-3">Organized Categories</h3>
+            <p class="text-sm text-slate-400 leading-7">
+              Explore tools through categories that make discovering relevant utilities easier.
+            </p>
+          </div>
+
+          <div class="feature-card glass rounded-2xl p-7">
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/15 text-emerald-300 flex items-center justify-center text-xl mb-6">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <h3 class="text-lg font-bold mb-3">Continuous Improvement</h3>
+            <p class="text-sm text-slate-400 leading-7">
+              New ideas and user feedback can help guide future platform improvements.
+            </p>
+          </div>
+
+          <div class="feature-card glass rounded-2xl p-7">
+            <div class="w-12 h-12 rounded-xl bg-amber-500/15 text-amber-300 flex items-center justify-center text-xl mb-6">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3 class="text-lg font-bold mb-3">User Focused</h3>
+            <p class="text-sm text-slate-400 leading-7">
+              We aim to make the platform straightforward and accessible for different kinds of users.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="max-w-7xl mx-auto px-5 md:px-8 py-24">
+
+      <div class="text-center mb-14">
+        <span class="text-violet-300 text-xs font-bold tracking-widest uppercase">
+          SIMPLE PROCESS
+        </span>
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-4">
+          Get Started in <span class="gradient-text">Three Steps</span>
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-7">
+
+        <div class="glass rounded-2xl p-7 text-center">
+          <div class="w-14 h-14 rounded-2xl gradient-button flex items-center justify-center text-xl font-black mx-auto mb-6">
+            01
+          </div>
+          <h3 class="text-lg font-bold mb-3">Explore</h3>
+          <p class="text-sm text-slate-400 leading-7">
+            Browse the available tool categories and discover useful utilities.
+          </p>
+        </div>
+
+        <div class="glass rounded-2xl p-7 text-center">
+          <div class="w-14 h-14 rounded-2xl gradient-button flex items-center justify-center text-xl font-black mx-auto mb-6">
+            02
+          </div>
+          <h3 class="text-lg font-bold mb-3">Choose a Tool</h3>
+          <p class="text-sm text-slate-400 leading-7">
+            Open the utility that matches the task you want to complete.
+          </p>
+        </div>
+
+        <div class="glass rounded-2xl p-7 text-center">
+          <div class="w-14 h-14 rounded-2xl gradient-button flex items-center justify-center text-xl font-black mx-auto mb-6">
+            03
+          </div>
+          <h3 class="text-lg font-bold mb-3">Get Started</h3>
+          <p class="text-sm text-slate-400 leading-7">
+            Follow the instructions provided by the selected tool.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="max-w-7xl mx-auto px-5 md:px-8 pb-24">
+      <div class="rounded-3xl p-9 md:p-14 text-center border border-violet-400/20 bg-gradient-to-br from-violet-900/50 to-indigo-900/30">
+
+        <div class="w-16 h-16 rounded-2xl bg-white/10 flex items-center justify-center text-3xl mx-auto mb-6">
+          <i class="fas fa-rocket text-violet-200"></i>
+        </div>
+
+        <h2 class="text-3xl md:text-4xl font-extrabold mb-5">
+          Ready to Explore <span class="gradient-text">ProTools?</span>
+        </h2>
+
+        <p class="text-slate-400 max-w-xl mx-auto mb-8 leading-7">
+          Discover the tools, explore the platform, and find utilities that fit your everyday digital tasks.
+        </p>
+
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="index.html" class="gradient-button px-7 py-3.5 rounded-xl font-bold">
+            Explore Tools <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+
+          <a href="contact.html" class="glass px-7 py-3.5 rounded-xl font-bold hover:bg-white/10 transition">
+            Get in Touch
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 bg-[#070612]">
+    <div class="max-w-7xl mx-auto px-5 md:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-5">
+
+      <a href="index.html" class="flex items-center gap-2 font-extrabold text-lg">
+        <span class="w-9 h-9 rounded-lg gradient-button flex items-center justify-center text-sm">PT</span>
+        Pro<span class="gradient-text">Tools</span>
+      </a>
+
+      <p class="text-xs text-slate-500 text-center">
+        © 2026 ProTools. All rights reserved.
+      </p>
+
+      <div class="flex gap-6 text-sm text-slate-400">
+        <a href="about.html" class="text-violet-300">About</a>
+        <a href="membership.html" class="hover:text-violet-300">Membership</a>
+        <a href="contact.html" class="hover:text-violet-300">Support</a>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    const menuButton = document.getElementById('menuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    menuButton.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.toggle('hidden');
+
+      menuButton.setAttribute('aria-expanded', String(!isHidden));
+
+      menuButton.innerHTML = isHidden
+        ? '<i class="fas fa-bars"></i>'
+        : '<i class="fas fa-times"></i>';
+    });
+  </script>
+
+</body>
+</html>

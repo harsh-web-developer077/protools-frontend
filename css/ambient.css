@@ -1,0 +1,17 @@
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background-color: #0d1117; color: #c9d1d9; line-height: 1.6; }
+header { padding: 20px; background: rgba(22, 27, 34, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid #30363d; display: flex; justify-content: space-between; align-items: center; }
+.logo { font-size: 24px; font-weight: bold; color: #58a6ff; text-decoration: none; text-shadow: 0 0 10px rgba(88, 166, 255, 0.5); }
+nav a { color: #c9d1d9; text-decoration: none; margin-left: 20px; transition: 0.3s; }
+nav a:hover { color: #58a6ff; text-shadow: 0 0 8px rgba(88, 166, 255, 0.8); }
+.container { max-width: 1200px; margin: 40px auto; padding: 20px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+.card { background: rgba(22, 27, 34, 0.5); padding: 25px; border-radius: 12px; border: 1px solid #30363d; text-align: center; transition: 0.4s; text-decoration: none; color: inherit; display: block; }
+.card:hover { transform: translateY(-5px); border-color: #58a6ff; box-shadow: 0 0 20px rgba(88, 166, 255, 0.2); }
+.card h3 { color: #58a6ff; margin-bottom: 10px; }
+/* Tool Specific Styles */
+.tool-box { background: rgba(22, 27, 34, 0.5); padding: 30px; border-radius: 12px; border: 1px solid #30363d; max-width: 600px; margin: 0 auto; text-align: center; box-shadow: 0 0 15px rgba(0,0,0,0.5); }
+input, textarea, button { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #30363d; background: #0d1117; color: #c9d1d9; }
+input:focus, textarea:focus { outline: none; border-color: #58a6ff; box-shadow: 0 0 10px rgba(88, 166, 255, 0.3); }
+button { background: #238636; color: white; border: none; cursor: pointer; font-weight: bold; transition: 0.3s; }
+button:hover { background: #2ea043; box-shadow: 0 0 15px rgba(46, 160, 67, 0.4); }

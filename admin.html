@@ -50,7 +50,6 @@
 </header>
 
 <main class="max-w-7xl mx-auto px-5 py-12">
-  <!-- LOGIN -->
   <section id="loginView" class="max-w-xl mx-auto py-8">
     <div class="mb-8 text-center">
       <div class="inline-flex w-16 h-16 rounded-2xl btn-gradient items-center justify-center text-2xl mb-5"><i class="fas fa-shield-halved"></i></div>
@@ -75,7 +74,6 @@
     </form>
   </section>
 
-  <!-- DASHBOARD -->
   <section id="dashboardView" class="hidden-view">
     <div class="mb-10">
       <div class="text-violet-400 text-xs font-bold tracking-[3px] uppercase mb-3">Management Center</div>
@@ -120,24 +118,22 @@
       <p id="formMessage" class="status" role="status" aria-live="polite"></p>
     </section>
 
-    
     <section id="membershipPaymentsSection" class="glass rounded-3xl p-6 md:p-9 mb-10">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
           <h2 class="text-2xl font-extrabold">Membership Payment Requests</h2>
           <p class="text-sm text-slate-400 mt-2">Verify received payments before approving.</p>
         </div>
-        <button id="refreshPayments" class="border border-slate-600 px-4 py-2.5 rounded-xl text-sm">
-          Refresh Requests
-        </button>
+        <button id="refreshPayments" type="button" class="border border-slate-600 px-4 py-2.5 rounded-xl text-sm hover:bg-white/5">Refresh Requests</button>
       </div>
-      <div id="paymentsMessage" class="status" role="status"></div>
+      <div id="paymentsMessage" class="status" role="status" aria-live="polite"></div>
       <div id="paymentsList" class="grid md:grid-cols-2 gap-5"></div>
     </section>
-<section class="mb-10">
+
+    <section class="mb-10">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div><h2 class="text-2xl font-extrabold">Database Offers</h2><p class="text-sm text-slate-400 mt-2">Manage offers stored on the server.</p></div>
-        <button id="refreshOffers" class="border border-slate-600 px-4 py-2.5 rounded-xl text-sm hover:bg-white/5"><i class="fas fa-rotate mr-2"></i> Refresh</button>
+        <button id="refreshOffers" type="button" class="border border-slate-600 px-4 py-2.5 rounded-xl text-sm hover:bg-white/5"><i class="fas fa-rotate mr-2"></i> Refresh</button>
       </div>
       <div class="grid sm:grid-cols-3 gap-5 mb-6">
         <div class="glass rounded-2xl p-5"><div class="text-slate-400 text-sm">Total Offers</div><div id="totalOffers" class="text-2xl font-black mt-2">0</div></div>
@@ -165,7 +161,6 @@
 (() => {
   "use strict";
 
-  // These API prefixes match the Express route mounts in the ProTools backend.
   const API_BASE = "https://protools-backend.onrender.com/api";
   const TOKEN_KEY = "protools_admin_token";
 
@@ -177,6 +172,7 @@
   let offers = [];
 
   function setMessage(element, text, success = true) {
+    if (!element) return;
     element.textContent = text || "";
     element.className = "status " + (success ? "text-emerald-400" : "text-red-400");
   }
@@ -196,21 +192,28 @@
     loginView.classList.add("hidden-view");
     dashboardView.classList.remove("hidden-view");
     $("logoutBtn").classList.remove("hidden-view");
-    $("welcomeText").textContent = user && user.name ? "Signed in as " + user.name + " (Administrator)" : "Administrator access verified.";
+    $("welcomeText").textContent = user && user.name
+      ? "Signed in as " + user.name + " (Administrator)"
+      : "Administrator access verified.";
   }
 
   async function api(path, options = {}) {
     const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
     if (token()) headers.Authorization = "Bearer " + token();
+
     const response = await fetch(API_BASE + path, { ...options, headers });
     let data = {};
     try { data = await response.json(); } catch (_) {}
+
     if (response.status === 401 || response.status === 403) {
       sessionStorage.removeItem(TOKEN_KEY);
       showLogin("Your admin session expired or access was denied. Please sign in again.");
       throw new Error(data.message || "Admin authorization failed.");
     }
-    if (!response.ok || data.success === false) throw new Error(data.message || "Request failed (" + response.status + ").");
+
+    if (!response.ok || data.success === false) {
+      throw new Error(data.message || "Request failed (" + response.status + ").");
+    }
     return data;
   }
 
@@ -220,15 +223,18 @@
       headers: {},
       body: JSON.stringify({ email, password })
     });
+
     if (!data.token || !data.user || data.user.role !== "admin") {
       throw new Error("This account does not have administrator access.");
     }
+
     sessionStorage.setItem(TOKEN_KEY, data.token);
     return data.user;
   }
 
   async function verifySession() {
     if (!token()) return showLogin();
+
     try {
       const data = await api("/auth/me");
       if (!data.user || data.user.role !== "admin") {
@@ -242,11 +248,9 @@
     }
   }
 
-
   async function loadPayments() {
     const root = $("paymentsList");
     const msg = $("paymentsMessage");
-
     if (!root || !msg) return;
 
     root.replaceChildren();
@@ -266,20 +270,16 @@
 
         const title = document.createElement("h3");
         title.className = "font-bold text-lg";
-        title.textContent =
-          (payment.plan || "Plan").toUpperCase() +
-          " · ₹" + (payment.amount || "—");
+        title.textContent = (payment.plan || "Plan").toUpperCase() + " · ₹" + (payment.amount || "—");
 
         const details = document.createElement("p");
         details.className = "text-sm text-slate-400 mt-3 leading-7";
         details.style.whiteSpace = "pre-line";
-
         details.textContent =
           "User: " + (payment.userEmail || payment.email || payment.user?.email || "Not provided") +
           "\nUTR: " + (payment.utr || "Not provided") +
           "\nStatus: " + (payment.status || "pending") +
-          "\nSubmitted: " +
-          (payment.createdAt ? new Date(payment.createdAt).toLocaleString() : "—");
+          "\nSubmitted: " + (payment.createdAt ? new Date(payment.createdAt).toLocaleString() : "—");
 
         card.append(title, details);
 
@@ -292,7 +292,6 @@
             "px-4 py-2 rounded-lg bg-emerald-500/20 text-emerald-300 text-xs font-bold",
             () => reviewPayment(payment._id, "approve")
           );
-
           const reject = makeButton(
             "Reject",
             "px-4 py-2 rounded-lg bg-red-500/20 text-red-300 text-xs font-bold",
@@ -305,7 +304,6 @@
 
         root.appendChild(card);
       });
-
     } catch (error) {
       msg.textContent = "Could not load requests: " + error.message;
     }
@@ -323,15 +321,10 @@
     try {
       await api(
         "/membership/admin/payments/" + encodeURIComponent(id) + "/" + action,
-        {
-          method: "POST",
-          body: JSON.stringify({})
-        }
+        { method: "POST", body: JSON.stringify({}) }
       );
-
       $("paymentsMessage").textContent = "Request updated.";
       await loadPayments();
-
     } catch (error) {
       $("paymentsMessage").textContent = error.message;
     }
@@ -339,6 +332,7 @@
 
   async function loadDashboard() {
     $("dashboardMessage").classList.add("hidden-view");
+
     const [overviewResult, offersResult] = await Promise.allSettled([
       api("/admin/overview"),
       api("/offers/all")
@@ -351,8 +345,13 @@
       $("totalLogins").textContent = stats.totalLogins ?? 0;
       $("totalToolUses").textContent = stats.totalToolUses ?? 0;
       $("totalTools").textContent = stats.totalTools ?? 0;
-      renderSimpleList("recentUsers", d.recentUsers || [], u => (u.name || "User") + " · " + (u.email || ""));
-      renderSimpleList("popularTools", d.popularTools || [], t => (t.name || t._id || "Tool") + " · " + (t.uses || 0) + " uses");
+
+      renderSimpleList("recentUsers", d.recentUsers || [], u =>
+        (u.name || "User") + " · " + (u.email || "")
+      );
+      renderSimpleList("popularTools", d.popularTools || [], t =>
+        (t.name || t._id || "Tool") + " · " + (t.uses || 0) + " uses"
+      );
     } else {
       showDashboardError("Could not load overview: " + overviewResult.reason.message);
     }
@@ -363,6 +362,8 @@
     } else {
       showDashboardError("Could not load offers: " + offersResult.reason.message);
     }
+
+    await loadPayments();
   }
 
   function showDashboardError(text) {
@@ -374,17 +375,27 @@
   function renderSimpleList(id, items, formatter) {
     const root = $(id);
     root.replaceChildren();
+
     if (!items.length) {
-      const p = document.createElement("p"); p.className = "text-slate-500"; p.textContent = "No records yet."; root.appendChild(p); return;
+      const p = document.createElement("p");
+      p.className = "text-slate-500";
+      p.textContent = "No records yet.";
+      root.appendChild(p);
+      return;
     }
+
     items.forEach(item => {
-      const p = document.createElement("p"); p.className = "border-b border-white/10 pb-3"; p.textContent = formatter(item); root.appendChild(p);
+      const p = document.createElement("p");
+      p.className = "border-b border-white/10 pb-3";
+      p.textContent = formatter(item);
+      root.appendChild(p);
     });
   }
 
   function renderOffers() {
     const list = $("offersList");
     list.replaceChildren();
+
     $("emptyState").classList.toggle("hidden-view", offers.length > 0);
     $("totalOffers").textContent = offers.length;
     $("activeOffers").textContent = offers.filter(o => o.isActive).length;
@@ -393,18 +404,43 @@
     offers.forEach(offer => {
       const card = document.createElement("article");
       card.className = "offer-card rounded-2xl p-6";
+
       const badge = document.createElement("span");
       badge.className = "inline-block text-xs font-bold tracking-wide text-violet-300 bg-violet-500/15 rounded-full px-3 py-2 mb-4";
       badge.textContent = offer.badge || "SPECIAL OFFER";
-      const title = document.createElement("h3"); title.className = "text-lg font-bold mb-2"; title.textContent = offer.title || "";
-      const description = document.createElement("p"); description.className = "text-sm text-slate-400 leading-6 mb-5"; description.textContent = offer.description || "";
+
+      const title = document.createElement("h3");
+      title.className = "text-lg font-bold mb-2";
+      title.textContent = offer.title || "";
+
+      const description = document.createElement("p");
+      description.className = "text-sm text-slate-400 leading-6 mb-5";
+      description.textContent = offer.description || "";
+
       const status = document.createElement("span");
-      status.className = "inline-flex text-xs font-bold rounded-full px-3 py-1 " + (offer.isActive ? "bg-emerald-500/15 text-emerald-400" : "bg-amber-500/15 text-amber-400");
+      status.className = "inline-flex text-xs font-bold rounded-full px-3 py-1 " +
+        (offer.isActive ? "bg-emerald-500/15 text-emerald-400" : "bg-amber-500/15 text-amber-400");
       status.textContent = offer.isActive ? "ACTIVE" : "INACTIVE";
-      const actions = document.createElement("div"); actions.className = "flex flex-wrap gap-2 mt-5";
-      const edit = makeButton("Edit", "px-4 py-2 rounded-lg bg-violet-500/20 text-violet-300 text-xs font-bold", () => editOffer(offer));
-      const toggle = makeButton(offer.isActive ? "Deactivate" : "Activate", "px-4 py-2 rounded-lg bg-slate-700 text-white text-xs font-bold", () => toggleOffer(offer));
-      const remove = makeButton("Delete", "px-4 py-2 rounded-lg bg-red-500/15 text-red-400 text-xs font-bold", () => deleteOffer(offer));
+
+      const actions = document.createElement("div");
+      actions.className = "flex flex-wrap gap-2 mt-5";
+
+      const edit = makeButton(
+        "Edit",
+        "px-4 py-2 rounded-lg bg-violet-500/20 text-violet-300 text-xs font-bold",
+        () => editOffer(offer)
+      );
+      const toggle = makeButton(
+        offer.isActive ? "Deactivate" : "Activate",
+        "px-4 py-2 rounded-lg bg-slate-700 text-white text-xs font-bold",
+        () => toggleOffer(offer)
+      );
+      const remove = makeButton(
+        "Delete",
+        "px-4 py-2 rounded-lg bg-red-500/15 text-red-400 text-xs font-bold",
+        () => deleteOffer(offer)
+      );
+
       actions.append(edit, toggle, remove);
       card.append(badge, title, description, status, actions);
       list.appendChild(card);
@@ -413,24 +449,33 @@
 
   function makeButton(text, className, handler) {
     const button = document.createElement("button");
-    button.type = "button"; button.className = className; button.textContent = text;
-    button.addEventListener("click", handler); return button;
+    button.type = "button";
+    button.className = className;
+    button.textContent = text;
+    button.addEventListener("click", handler);
+    return button;
   }
 
   function toApiLink(value) {
     if (!value) return "";
-    // Backend accepts only absolute HTTP/HTTPS URLs; resolve relative site links here.
     const resolved = new URL(value, window.location.href);
-    if (!["http:", "https:"].includes(resolved.protocol)) throw new Error("Please enter a valid HTTP/HTTPS link.");
+    if (!["http:", "https:"].includes(resolved.protocol)) {
+      throw new Error("Please enter a valid HTTP/HTTPS link.");
+    }
     return resolved.href;
   }
 
   function formPayload() {
     const title = $("offerTitle").value.trim();
     if (!title) throw new Error("Offer title is required.");
+
     const startRaw = $("offerStart").value;
     const endRaw = $("offerEnd").value;
-    if (startRaw && endRaw && new Date(endRaw) < new Date(startRaw)) throw new Error("End date must be after the start date.");
+
+    if (startRaw && endRaw && new Date(endRaw) < new Date(startRaw)) {
+      throw new Error("End date must be after the start date.");
+    }
+
     return {
       title,
       badge: $("offerBadge").value.trim(),
@@ -477,27 +522,35 @@
   async function toggleOffer(offer) {
     try {
       await api("/offers/" + encodeURIComponent(offer._id), {
-        method: "PATCH", body: JSON.stringify({ isActive: !offer.isActive })
+        method: "PATCH",
+        body: JSON.stringify({ isActive: !offer.isActive })
       });
       await loadDashboard();
-    } catch (error) { setMessage($("formMessage"), error.message, false); }
+    } catch (error) {
+      setMessage($("formMessage"), error.message, false);
+    }
   }
 
   async function deleteOffer(offer) {
     if (!confirm("Delete this offer permanently?")) return;
+
     try {
       await api("/offers/" + encodeURIComponent(offer._id), { method: "DELETE" });
       if ($("offerId").value === offer._id) resetForm();
       await loadDashboard();
       setMessage($("formMessage"), "Offer deleted from database.");
-    } catch (error) { setMessage($("formMessage"), error.message, false); }
+    } catch (error) {
+      setMessage($("formMessage"), error.message, false);
+    }
   }
 
   loginForm.addEventListener("submit", async event => {
     event.preventDefault();
     const button = $("loginButton");
-    button.disabled = true; button.textContent = "Checking credentials...";
+    button.disabled = true;
+    button.textContent = "Checking credentials...";
     setMessage($("loginMessage"), "");
+
     try {
       const user = await login($("loginEmail").value.trim(), $("loginPassword").value);
       $("loginPassword").value = "";
@@ -517,13 +570,21 @@
     const id = $("offerId").value;
     const button = $("saveButton");
     button.disabled = true;
+
     try {
       const payload = formPayload();
       if (id) {
-        await api("/offers/" + encodeURIComponent(id), { method: "PATCH", body: JSON.stringify(payload) });
+        await api("/offers/" + encodeURIComponent(id), {
+          method: "PATCH",
+          body: JSON.stringify(payload)
+        });
       } else {
-        await api("/offers", { method: "POST", body: JSON.stringify(payload) });
+        await api("/offers", {
+          method: "POST",
+          body: JSON.stringify(payload)
+        });
       }
+
       resetForm();
       await loadDashboard();
       setMessage($("formMessage"), id ? "Offer updated in MongoDB." : "Offer saved to MongoDB.");
@@ -537,7 +598,8 @@
   $("clearForm").addEventListener("click", resetForm);
   $("cancelEdit").addEventListener("click", resetForm);
   $("refreshOffers").addEventListener("click", loadDashboard);
-  $("refreshPayments")?.addEventListener("click", loadPayments);
+  $("refreshPayments").addEventListener("click", loadPayments);
+
   $("logoutBtn").addEventListener("click", () => {
     sessionStorage.removeItem(TOKEN_KEY);
     resetForm();

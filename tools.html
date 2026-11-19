@@ -4,18 +4,7 @@
   <meta charset="UTF-8">
   <title>Tools Library - ProTools Portal</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-    body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-    .sidebar-scroll::-webkit-scrollbar { width: 6px; }
-    .sidebar-scroll::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.2); border-radius: 10px; }
-    .tool-input { width: 100%; padding: 0.75rem 1rem; border-radius: 0.5rem; border: 1px solid #cbd5e1; outline: none; transition: all 0.3s; margin-bottom: 1rem; }
-    .tool-input:focus { border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1); }
-    .btn-primary { background-color: #7c3aed; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-weight: 600; transition: all 0.3s; width: 100%; text-align: center; cursor: pointer; border: none; margin-bottom: 1rem;}
-    .btn-primary:hover { background-color: #6d28d9; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2); }
-    .output-box { background-color: #f1f5f9; padding: 1rem; border-radius: 0.5rem; border: 1px solid #e2e8f0; font-family: monospace; font-size: 0.875rem; color: #475569; word-break: break-all; min-height: 3rem; }
-  </style>
+ <link rel="stylesheet" href="css/tools-theme.css">
 </head>
 <body class="flex h-screen overflow-hidden bg-slate-50">
   <aside class="w-64 bg-violet-900 text-white flex flex-col h-full shadow-xl z-20 hidden md:flex shrink-0">
@@ -26,13 +15,23 @@
     <div class="flex-1 overflow-y-auto sidebar-scroll py-4">
       <nav class="space-y-1 px-3">
         <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-violet-800 transition"><i class="fas fa-home w-5"></i> Dashboard</a>
-        <a href="tools.html" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-violet-800 transition"><i class="fas fa-layer-group w-5"></i> All Tools (200+)</a>
-        
-        <p class="px-4 pt-4 pb-2 text-xs font-semibold text-violet-300 uppercase tracking-wider">Top Categories</p>
-        <a href="tools.html#seo" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-violet-800 transition"><i class="fas fa-search w-5"></i> SEO Tools</a>
-        <a href="tools.html#dev" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-violet-800 transition"><i class="fas fa-code w-5"></i> Developer Tools</a>
-        <a href="tools.html#general" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-violet-800 transition"><i class="fas fa-toolbox w-5"></i> General Utilities</a>
-        
+        <a href="tools.html" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-violet-800 transition"><i class="fas fa-layer-group w-5"></i> All Tools (150+)</a>
+       <p class="px-4 pt-4 pb-2 text-xs font-semibold text-violet-300 uppercase tracking-wider">
+  Top Categories
+</p>
+
+<div class="space-y-1 px-3">
+  <a href="#developer" class="flex items-center px-4 py-2 rounded-lg hover:bg-violet-800 transition">Developer</a>
+  <a href="#seo" class="flex items-center px-4 py-2 rounded-lg hover:bg-violet-800 transition">SEO</a>
+  <a href="#text" class="flex items-center px-4 py-2 rounded-lg hover:bg-violet-800 transition">Text</a>
+  <a href="#pdf" class="flex items-center px-4 py-2 rounded-lg hover:bg-violet-800 transition">PDF</a>
+  <a href="#image" class="flex items-center px-4 py-2 rounded-lg hover:bg-violet-800 transition">Image</a>
+  <a href="#security" class="flex items-center px-4 py-2 rounded-lg hover:bg-violet-800 transition">Security</a>
+  <a href="#converters" class="flex items-center px-4 py-2 rounded-lg hover:bg-violet-800 transition">Converters</a>
+  <a href="#calculators" class="flex items-center px-4 py-2 rounded-lg hover:bg-violet-800 transition">Calculators</a>
+  <a href="#generators" class="flex items-center px-4 py-2 rounded-lg hover:bg-violet-800 transition">Generators</a>
+  <a href="#utilities" class="flex items-center px-4 py-2 rounded-lg hover:bg-violet-800 transition">Utilities</a>
+</div>
         <p class="px-4 pt-4 pb-2 text-xs font-semibold text-violet-300 uppercase tracking-wider">Portal</p>
         <a href="about.html" class="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-violet-800 transition"><i class="fas fa-info-circle w-5"></i> About Us</a>
       </nav>

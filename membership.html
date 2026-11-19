@@ -131,10 +131,25 @@
   <section id="paymentArea" class="hidden max-w-2xl mx-auto mt-10 glass rounded-3xl p-7">
     <h2 class="text-2xl font-extrabold mb-2">Membership payment</h2>
     <p id="selectedPlanText" class="text-violet-300 mb-5"></p>
-    <div class="rounded-xl bg-amber-500/10 border border-amber-400/20 p-4 text-sm text-amber-200">
-      Payment instructions are not configured yet. Please contact the site administrator for verified payment details. Do not send money to an unverified account.
+    <div id="upiDisabled" class="rounded-xl bg-amber-500/10 border border-amber-400/20 p-4 text-sm text-amber-200">
+      UPI ID is a placeholder right now. Payment is disabled until the administrator adds and verifies the official UPI ID. Please do not send money.
     </div>
-    <p class="text-xs text-slate-500 mt-4">Your Pro membership will only activate after the administrator verifies the payment.</p>
+    <div id="upiPayment" class="hidden grid sm:grid-cols-2 gap-6 items-center">
+      <div class="bg-white rounded-2xl p-4 text-center">
+        <img id="upiQr" alt="UPI payment QR code" class="mx-auto w-56 h-56 object-contain" />
+        <p class="text-slate-800 text-xs mt-2 font-semibold">Scan with a UPI app</p>
+      </div>
+      <div class="space-y-3">
+        <p class="text-sm text-slate-300">Pay the exact amount shown. After payment, enter the UTR/reference number below. Membership activates only after admin verifies the received payment.</p>
+        <p id="upiAmount" class="text-3xl font-black gradient-text"></p>
+        <p id="upiAddress" class="text-xs text-slate-400 break-all"></p>
+        <label class="block text-sm font-semibold" for="paymentUtr">UPI UTR / Reference number</label>
+        <input id="paymentUtr" class="w-full rounded-xl bg-[#171329] border border-slate-600 px-4 py-3 text-white" maxlength="30" minlength="8" placeholder="Enter 8-30 character reference" />
+        <button id="submitPayment" class="btn-gradient w-full rounded-xl py-3 font-bold">Submit payment request</button>
+        <p id="paymentMessage" class="text-sm" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+    <p class="text-xs text-slate-500 mt-4">Never share your UPI PIN or OTP. Pro membership is not activated by submitting a UTR alone.</p>
   </section>
 
   <div class="max-w-4xl mx-auto mt-10 glass rounded-2xl p-6 text-center">
@@ -143,16 +158,74 @@
 </main>
 
 <script>
-function selectPlan(plan) {
-  const box = document.getElementById("paymentArea");
-  const text = document.getElementById("selectedPlanText");
-  if (!box || !text) return;
-  text.textContent = plan === "monthly"
-    ? "Monthly Pro · ₹199 · 30 days"
-    : "Yearly Pro · ₹999 · 365 days";
-  box.classList.remove("hidden");
-  box.scrollIntoView({behavior:"smooth", block:"center"});
-}
+(() => {
+  "use strict";
+  const API_BASE = "https://protools-backend.onrender.com/api";
+  const UPI_ID = "YOUR_UPI_ID_HERE";
+  const UPI_NAME = "ProTools";
+  const plans = { monthly: { label: "Monthly Pro · ₹199 · 30 days", amount: 199 }, yearly: { label: "Yearly Pro · ₹999 · 365 days", amount: 999 } };
+  let selectedPlan = "monthly";
+  const $ = id => document.getElementById(id);
+
+  function getToken() {
+    const keys = ["protools_token", "token", "authToken", "jwt", "userToken"];
+    for (const store of [localStorage, sessionStorage]) {
+      for (const key of keys) {
+        const value = store.getItem(key);
+        if (value) return value;
+      }
+    }
+    return "";
+  }
+
+  window.selectPlan = function(plan) {
+    if (!plans[plan]) return;
+    selectedPlan = plan;
+    $("selectedPlanText").textContent = plans[plan].label;
+    $("upiAmount").textContent = "₹" + plans[plan].amount;
+    $("paymentMessage").textContent = "";
+    $("paymentUtr").value = "";
+    const configured = UPI_ID && UPI_ID !== "YOUR_UPI_ID_HERE" && /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+$/.test(UPI_ID);
+    $("upiDisabled").classList.toggle("hidden", configured);
+    $("upiPayment").classList.toggle("hidden", !configured);
+    if (configured) {
+      const uri = "upi://pay?pa=" + encodeURIComponent(UPI_ID) + "&pn=" + encodeURIComponent(UPI_NAME) + "&am=" + plans[plan].amount + "&cu=INR&tn=" + encodeURIComponent("ProTools " + plan + " membership");
+      $("upiQr").src = "https://api.qrserver.com/v1/create-qr-code/?size=280x280&data=" + encodeURIComponent(uri);
+      $("upiAddress").textContent = "Pay to: " + UPI_ID;
+    }
+    $("paymentArea").classList.remove("hidden");
+    $("paymentArea").scrollIntoView({ behavior: "smooth", block: "center" });
+  };
+
+  $("submitPayment").addEventListener("click", async () => {
+    const msg = $("paymentMessage");
+    const utr = $("paymentUtr").value.trim();
+    const token = getToken();
+    if (!token) { msg.textContent = "Please log in to your ProTools account before submitting a payment request."; msg.className = "text-sm text-amber-300"; return; }
+    if (!/^[A-Za-z0-9-]{8,30}$/.test(utr)) { msg.textContent = "Enter a valid UTR/reference number (8-30 characters)."; msg.className = "text-sm text-red-400"; return; }
+    const button = $("submitPayment");
+    button.disabled = true;
+    button.textContent = "Submitting...";
+    try {
+      const response = await fetch(API_BASE + "/membership/payments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+        body: JSON.stringify({ plan: selectedPlan, utr })
+      });
+      const data = await response.json();
+      if (!response.ok || !data.success) throw new Error(data.message || "Could not submit request.");
+      msg.textContent = "Request submitted. Admin will verify the payment before activating membership.";
+      msg.className = "text-sm text-emerald-400";
+      $("paymentUtr").value = "";
+    } catch (error) {
+      msg.textContent = error.message;
+      msg.className = "text-sm text-red-400";
+    } finally {
+      button.disabled = false;
+      button.textContent = "Submit payment request";
+    }
+  });
+})();
 </script>
 
 <!-- FAQ -->

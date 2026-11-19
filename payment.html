@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c0918"><title>Secure Membership Payment | ProTools</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0c0918;color:#f8fafc;font-family:Inter,sans-serif}
+.glass{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(16px)}
+.gradient-text{background:linear-gradient(90deg,#c4b5fd,#818cf8,#67e8f9);-webkit-background-clip:text;color:transparent}
+.btn-gradient{background:linear-gradient(110deg,#7c3aed,#4f46e5);transition:.2s}.btn-gradient:hover{transform:translateY(-1px)}
+input{outline:none}input:focus{border-color:#a78bfa!important;box-shadow:0 0 0 3px #8b5cf633}
+</style>
+</head>
+<body>
+<header class="border-b border-white/10 bg-[#0c0918]/90">
+ <div class="max-w-6xl mx-auto px-5 h-20 flex items-center justify-between">
+  <a href="index.html" class="flex items-center gap-3"><span class="w-10 h-10 rounded-xl btn-gradient grid place-items-center"><i class="fas fa-bolt"></i></span><span class="text-xl font-extrabold">Pro<span class="gradient-text">Tools</span></span></a>
+  <a href="membership.html" class="text-sm text-slate-300 hover:text-white"><i class="fas fa-arrow-left mr-2"></i>Back to plans</a>
+ </div>
+</header>
+<main class="max-w-5xl mx-auto px-5 py-12">
+ <div class="text-center mb-9"><p class="text-violet-300 text-xs font-bold tracking-[3px] uppercase mb-3">Membership checkout</p><h1 class="text-3xl md:text-5xl font-black">Complete your <span class="gradient-text">Pro upgrade</span></h1><p class="text-slate-400 mt-3">Review your plan, apply a coupon and view your payment QR below.</p></div>
+ <div class="grid lg:grid-cols-[.85fr_1.15fr] gap-6">
+  <section class="glass rounded-3xl p-7">
+   <div class="flex items-center justify-between mb-6"><h2 class="text-xl font-extrabold">Order summary</h2><i class="fas fa-receipt text-violet-300 text-xl"></i></div>
+   <div class="rounded-2xl bg-violet-500/10 border border-violet-400/20 p-5">
+    <p class="text-xs uppercase tracking-widest text-violet-300 font-bold">Selected membership</p><h3 id="planName" class="text-2xl font-extrabold mt-2">Pro Monthly</h3><p id="planDuration" class="text-sm text-slate-400 mt-1">30 days</p>
+   </div>
+   <div class="space-y-4 mt-6 text-sm">
+    <div class="flex justify-between text-slate-400"><span>Plan price</span><span id="basePrice">₹199</span></div>
+    <div class="flex justify-between text-slate-400"><span>Coupon discount</span><span id="discountPrice">−₹0</span></div>
+    <div class="border-t border-white/10 pt-4 flex justify-between items-center"><span class="font-bold">Total payable</span><strong id="finalPrice" class="text-3xl gradient-text">₹199</strong></div>
+   </div>
+   <div class="mt-7 rounded-xl bg-white/5 p-4 text-xs text-slate-400 leading-6"><i class="fas fa-shield-halved text-emerald-300 mr-2"></i>Membership activates only after an administrator independently verifies the payment.</div>
+  </section>
+  <section class="glass rounded-3xl p-7">
+   <h2 class="text-xl font-extrabold mb-5">Payment details</h2>
+   <label for="couponCode" class="block text-sm font-semibold mb-2">Have a coupon code?</label>
+   <div class="flex gap-2"><input id="couponCode" class="min-w-0 flex-1 rounded-xl bg-[#171329] border border-slate-600 px-4 py-3 text-white" placeholder="Enter coupon code" maxlength="24"><button id="applyCoupon" class="btn-gradient rounded-xl px-5 font-bold">Apply</button></div>
+   <p id="couponMessage" class="text-xs mt-2 text-slate-400" aria-live="polite"></p>
+   <div class="mt-6 grid sm:grid-cols-2 gap-6 items-center">
+    <div class="bg-white rounded-2xl p-4 text-center">
+     <img id="paymentQr" alt="Payment QR code preview" class="w-52 h-52 object-contain mx-auto" src="">
+     <p id="qrCaption" class="text-slate-700 text-xs font-bold mt-2">QR preview</p>
+    </div>
+    <div>
+     <p id="upiStatus" class="text-sm font-bold text-amber-300"><i class="fas fa-triangle-exclamation mr-2"></i>UPI details not configured</p>
+     <p id="upiHelp" class="text-xs text-slate-400 leading-6 mt-2">A demo QR preview is shown. It is not a payment QR and cannot transfer money. The administrator must configure the official UPI ID before payments can be made.</p>
+     <p id="payAmount" class="text-2xl font-black gradient-text mt-4">₹199</p>
+     <p id="upiAddress" class="text-xs text-slate-400 break-all mt-1"></p>
+    </div>
+   </div>
+   <div class="mt-6 border-t border-white/10 pt-5">
+    <label for="paymentUtr" class="block text-sm font-semibold mb-2">UPI UTR / reference number</label>
+    <input id="paymentUtr" class="w-full rounded-xl bg-[#171329] border border-slate-600 px-4 py-3 text-white" maxlength="30" minlength="8" placeholder="Available after payment setup" disabled>
+    <button id="submitPayment" disabled class="btn-gradient opacity-50 cursor-not-allowed w-full rounded-xl py-3 font-bold mt-4">Payment setup pending</button>
+    <p id="paymentMessage" class="text-sm mt-3" role="status" aria-live="polite"></p>
+   </div>
+  </section>
+ </div>
+ <p class="text-center text-xs text-slate-500 mt-8">Never share your UPI PIN, OTP or banking password. Do not pay using a demo QR.</p>
+</main>
+<script>
+(()=>{"use strict";
+const API="https://protools-backend.onrender.com/api";
+const UPI_ID="YOUR_UPI_ID_HERE",UPI_NAME="ProTools";
+const plans={monthly:{name:"Pro Monthly",duration:"30 days",amount:199},yearly:{name:"Pro Yearly",duration:"365 days",amount:999}};
+const $=id=>document.getElementById(id);
+const params=new URLSearchParams(location.search);
+let plan=params.get("plan")||"monthly",coupon="",base=0,discount=0,total=0;
+function token(){for(const s of [localStorage,sessionStorage])for(const k of ["protools_token","token","authToken","jwt","userToken"]){const v=s.getItem(k);if(v)return v;}return"";}
+function qr(value){$("paymentQr").src="https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=8&data="+encodeURIComponent(value);}
+function render(){
+ const p=plans[plan];base=p.amount;total=base-discount;
+ $("planName").textContent=p.name;$("planDuration").textContent=p.duration;
+ $("basePrice").textContent="₹"+base;$("discountPrice").textContent="−₹"+discount;
+ $("finalPrice").textContent="₹"+total;$("payAmount").textContent="₹"+total;
+ const configured=UPI_ID!=="YOUR_UPI_ID_HERE"&&/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+$/.test(UPI_ID);
+ if(configured){
+  const uri="upi://pay?pa="+encodeURIComponent(UPI_ID)+"&pn="+encodeURIComponent(UPI_NAME)+"&am="+total+"&cu=INR&tn="+encodeURIComponent("ProTools "+plan+" membership");
+  qr(uri);$("qrCaption").textContent="Scan to pay ₹"+total;
+  $("upiStatus").innerHTML='<i class="fas fa-circle-check mr-2"></i>UPI payment ready';$("upiStatus").className="text-sm font-bold text-emerald-300";
+  $("upiHelp").textContent="Scan this QR using your UPI app and pay the exact amount shown. Submit your UTR after completing payment.";
+  $("upiAddress").textContent="Pay to: "+UPI_ID;
+  $("paymentUtr").disabled=false;$("paymentUtr").placeholder="Enter 8–30 character UTR/reference";
+  $("submitPayment").disabled=false;$("submitPayment").classList.remove("opacity-50","cursor-not-allowed");$("submitPayment").textContent="Submit payment request";
+ }else{
+  qr("PROTOOLS DEMO QR ONLY - NOT A PAYMENT - UPI ID NOT CONFIGURED - Amount preview INR "+total);
+  $("qrCaption").textContent="DEMO ONLY · NOT PAYABLE";
+  $("upiStatus").innerHTML='<i class="fas fa-triangle-exclamation mr-2"></i>UPI details not configured';$("upiStatus").className="text-sm font-bold text-amber-300";
+  $("upiHelp").textContent="This is a demo QR preview only. It cannot transfer money. The administrator must configure the official UPI ID before payments can be made.";
+  $("upiAddress").textContent="UPI ID: Not configured";
+  $("paymentUtr").disabled=true;$("paymentUtr").placeholder="Payment setup pending";
+  $("submitPayment").disabled=true;$("submitPayment").classList.add("opacity-50","cursor-not-allowed");$("submitPayment").textContent="Payment setup pending";
+ }
+}
+$("applyCoupon").addEventListener("click",async()=>{
+ const code=$("couponCode").value.trim(),msg=$("couponMessage"),t=token();
+ if(!code){coupon="";discount=0;msg.textContent="Enter a coupon code.";msg.className="text-xs mt-2 text-amber-300";render();return;}
+ if(!t){msg.textContent="Please log in before applying a coupon.";msg.className="text-xs mt-2 text-amber-300";return;}
+ const b=$("applyCoupon");b.disabled=true;b.textContent="Checking...";
+ try{const r=await fetch(API+"/membership/coupons/validate",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+t},body:JSON.stringify({plan,code})});const d=await r.json();if(!r.ok||!d.success)throw Error(d.message||"Coupon could not be applied.");
+ coupon=d.code;discount=d.discount;render();msg.textContent="Coupon "+coupon+" applied successfully. QR and payable amount updated.";msg.className="text-xs mt-2 text-emerald-400";
+ }catch(e){coupon="";discount=0;render();msg.textContent=e.message;msg.className="text-xs mt-2 text-red-400";}
+ finally{b.disabled=false;b.textContent="Apply";}
+});
+$("couponCode").addEventListener("input",()=>{if(coupon){coupon="";discount=0;render();$("couponMessage").textContent="Coupon changed. Apply it again to update the total."; }});
+$("submitPayment").addEventListener("click",async()=>{
+ const t=token(),utr=$("paymentUtr").value.trim(),msg=$("paymentMessage");
+ if(!t){msg.textContent="Please log in first.";msg.className="text-sm text-amber-300";return;}
+ if(!/^[A-Za-z0-9-]{8,30}$/.test(utr)){msg.textContent="Enter a valid UTR/reference number.";msg.className="text-sm text-red-400";return;}
+ const b=$("submitPayment");b.disabled=true;b.textContent="Submitting...";
+ try{const r=await fetch(API+"/membership/payments",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+t},body:JSON.stringify({plan,utr,couponCode:coupon})});const d=await r.json();if(!r.ok||!d.success)throw Error(d.message||"Could not submit request.");msg.textContent="Request submitted. Admin will independently verify payment before activation.";msg.className="text-sm text-emerald-400";$("paymentUtr").value="";}
+ catch(e){msg.textContent=e.message;msg.className="text-sm text-red-400";}
+ finally{b.disabled=false;b.textContent="Submit payment request";}
+});
+if(!plans[plan]){plan="monthly";history.replaceState(null,"","payment.html?plan=monthly");}
+render();
+})();
+</script>
+</body></html>

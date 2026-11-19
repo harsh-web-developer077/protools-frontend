@@ -73,7 +73,7 @@ const plans={monthly:{name:"Pro Monthly",duration:"30 days",amount:199},yearly:{
 const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
 let plan=params.get("plan")||"monthly",coupon="",base=0,discount=0,total=0;
-function token(){for(const s of [localStorage,sessionStorage])for(const k of ["protools_token","token","authToken","jwt","userToken"]){const v=s.getItem(k);if(v)return v;}return"";}
+function token(){return localStorage.getItem("protools_token")||sessionStorage.getItem("protools_token")||sessionStorage.getItem("protools_admin_token")||localStorage.getItem("protools_admin_token")||"";}
 function qr(value){$("paymentQr").src="https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=8&data="+encodeURIComponent(value);}
 function render(){
  const p=plans[plan];base=p.amount;total=base-discount;
@@ -102,7 +102,7 @@ function render(){
 $("applyCoupon").addEventListener("click",async()=>{
  const code=$("couponCode").value.trim(),msg=$("couponMessage"),t=token();
  if(!code){coupon="";discount=0;msg.textContent="Enter a coupon code.";msg.className="text-xs mt-2 text-amber-300";render();return;}
- if(!t){msg.textContent="Please log in before applying a coupon.";msg.className="text-xs mt-2 text-amber-300";return;}
+ if(!t){msg.innerHTML="Please log in before applying a coupon. <a class=\"text-violet-300 underline\" href=\"auth.html?next=payment.html%3Fplan%3D"+encodeURIComponent(plan)+"\">Log in / Sign up</a>";msg.className="text-xs mt-2 text-amber-300";return;}
  const b=$("applyCoupon");b.disabled=true;b.textContent="Checking...";
  try{const r=await fetch(API+"/membership/coupons/validate",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+t},body:JSON.stringify({plan,code})});const d=await r.json();if(!r.ok||!d.success)throw Error(d.message||"Coupon could not be applied.");
  coupon=d.code;discount=d.discount;render();msg.textContent="Coupon "+coupon+" applied successfully. QR and payable amount updated.";msg.className="text-xs mt-2 text-emerald-400";
@@ -112,7 +112,7 @@ $("applyCoupon").addEventListener("click",async()=>{
 $("couponCode").addEventListener("input",()=>{if(coupon){coupon="";discount=0;render();$("couponMessage").textContent="Coupon changed. Apply it again to update the total."; }});
 $("submitPayment").addEventListener("click",async()=>{
  const t=token(),utr=$("paymentUtr").value.trim(),msg=$("paymentMessage");
- if(!t){msg.textContent="Please log in first.";msg.className="text-sm text-amber-300";return;}
+ if(!t){location.href="auth.html?next=payment.html%3Fplan%3D"+encodeURIComponent(plan);return;}
  if(!/^[A-Za-z0-9-]{8,30}$/.test(utr)){msg.textContent="Enter a valid UTR/reference number.";msg.className="text-sm text-red-400";return;}
  const b=$("submitPayment");b.disabled=true;b.textContent="Submitting...";
  try{const r=await fetch(API+"/membership/payments",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+t},body:JSON.stringify({plan,utr,couponCode:coupon,payerName:document.getElementById("payerName").value.trim()})});const d=await r.json();if(!r.ok||!d.success)throw Error(d.message||"Could not submit request.");msg.textContent="Request submitted. Admin will independently verify payment before activation.";msg.className="text-sm text-emerald-400";$("paymentUtr").value="";}

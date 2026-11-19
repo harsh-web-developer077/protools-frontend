@@ -229,7 +229,7 @@
       throw new Error("This account does not have administrator access.");
     }
 
-    sessionStorage.setItem(TOKEN_KEY, data.token);
+    sessionStorage.setItem(TOKEN_KEY, data.token);\n    localStorage.setItem("protools_token", data.token);\n    localStorage.setItem("protools_user", JSON.stringify(data.user));
     return data.user;
   }
 

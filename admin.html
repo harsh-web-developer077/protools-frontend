@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,382 +9,434 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    * { box-sizing:border-box; }
-    body { background:#0c0918; color:#f8fafc; font-family:Inter,sans-serif; }
-    .glass { background:rgba(255,255,255,.055); border:1px solid rgba(255,255,255,.1); backdrop-filter:blur(15px); }
-    .gradient-text { background:linear-gradient(90deg,#c4b5fd,#818cf8,#67e8f9); -webkit-background-clip:text; color:transparent; }
-    .btn-gradient { background:linear-gradient(110deg,#7c3aed,#4f46e5); transition:.2s; }
-    .btn-gradient:hover { transform:translateY(-2px); }
-    .field { width:100%; padding:13px 15px; border-radius:10px; background:#171329; border:1px solid #37304e; color:white; outline:none; }
-    .field:focus { border-color:#a78bfa; box-shadow:0 0 0 3px rgba(139,92,246,.12); }
-    .field::placeholder { color:#77718c; }
-    .nav-link { color:#c4bfd2; }
-    .nav-link:hover { color:white; }
-    .offer-card { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); }
-    .mobile-menu { display:none; }
-    .mobile-menu.open { display:flex; }
+    *{box-sizing:border-box}
+    body{background:#0c0918;color:#f8fafc;font-family:Inter,sans-serif}
+    .glass{background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(15px)}
+    .gradient-text{background:linear-gradient(90deg,#c4b5fd,#818cf8,#67e8f9);-webkit-background-clip:text;color:transparent}
+    .btn-gradient{background:linear-gradient(110deg,#7c3aed,#4f46e5);transition:.2s}
+    .btn-gradient:hover{transform:translateY(-2px)}
+    .field{width:100%;padding:13px 15px;border-radius:10px;background:#171329;border:1px solid #37304e;color:white;outline:none}
+    .field:focus{border-color:#a78bfa;box-shadow:0 0 0 3px rgba(139,92,246,.12)}
+    .field::placeholder{color:#77718c}
+    .nav-link{color:#c4bfd2}.nav-link:hover{color:white}
+    .offer-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)}
+    .hidden-view{display:none!important}
+    .status{font-size:12px;margin-top:14px;min-height:18px}
   </style>
 </head>
 <body>
-
-<!-- NAVBAR -->
-<header class="sticky top-0 z-50 border-b border-white/10 bg-[#0c0918]/95 backdrop-blur-xl">
+<header class="sticky top-0 z-40 border-b border-white/10 bg-[#0c0918]/95 backdrop-blur-xl">
   <div class="max-w-7xl mx-auto px-5">
     <div class="h-20 flex items-center justify-between">
       <a href="index.html" class="flex items-center gap-3">
-        <div class="w-11 h-11 rounded-xl btn-gradient flex items-center justify-center text-xl">
-          <i class="fas fa-bolt"></i>
-        </div>
+        <div class="w-11 h-11 rounded-xl btn-gradient flex items-center justify-center text-xl"><i class="fas fa-bolt"></i></div>
         <div>
           <div class="text-xl font-extrabold">Pro<span class="gradient-text">Tools</span></div>
           <div class="text-[10px] text-slate-500 tracking-[3px] uppercase">Admin Portal</div>
         </div>
       </a>
-
-      <nav class="hidden md:flex gap-7 text-sm font-medium">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="tools.html" class="nav-link">Tools</a>
-        <a href="membership.html" class="nav-link">Membership</a>
-        <a href="about.html" class="nav-link">About</a>
-        <a href="contact.html" class="nav-link">Contact</a>
-      </nav>
-
-      <button id="menuBtn" class="md:hidden text-xl p-2" aria-label="Toggle menu" aria-expanded="false">
-        <i class="fas fa-bars"></i>
-      </button>
+      <div class="flex items-center gap-5">
+        <nav class="hidden md:flex gap-7 text-sm font-medium">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="tools.html" class="nav-link">Tools</a>
+          <a href="membership.html" class="nav-link">Membership</a>
+          <a href="about.html" class="nav-link">About</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
+        <button id="logoutBtn" class="hidden-view border border-slate-600 rounded-xl px-4 py-2 text-sm hover:bg-white/5">Logout</button>
+      </div>
     </div>
-
-    <nav id="mobileMenu" class="mobile-menu flex-col gap-4 pb-5 text-sm">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="tools.html" class="nav-link">Tools</a>
-      <a href="membership.html" class="nav-link">Membership</a>
-      <a href="about.html" class="nav-link">About</a>
-      <a href="contact.html" class="nav-link">Contact</a>
-    </nav>
   </div>
 </header>
 
 <main class="max-w-7xl mx-auto px-5 py-12">
-
-  <!-- PAGE HEADING -->
-  <div class="mb-10">
-    <div class="text-violet-400 text-xs font-bold tracking-[3px] uppercase mb-3">Management Center</div>
-    <h1 class="text-3xl md:text-4xl font-black">Admin <span class="gradient-text">Dashboard</span></h1>
-    <p class="text-slate-400 mt-3">Manage homepage promotions and platform offers.</p>
-  </div>
-
-  <!-- NOTICE -->
-  <div class="glass rounded-2xl p-5 mb-8 flex gap-4 items-start">
-    <i class="fas fa-info-circle text-amber-400 text-xl mt-1"></i>
-    <div>
-      <h3 class="font-bold text-sm mb-1">Frontend storage notice</h3>
-      <p class="text-xs text-slate-400 leading-6">
-        Offers are currently saved in this browser's localStorage. They will appear on the homepage
-        when opened in the same browser and origin. This is not a secure, global admin system.
-        A backend with admin authentication is required for public-wide offer management.
-      </p>
+  <!-- LOGIN -->
+  <section id="loginView" class="max-w-xl mx-auto py-8">
+    <div class="mb-8 text-center">
+      <div class="inline-flex w-16 h-16 rounded-2xl btn-gradient items-center justify-center text-2xl mb-5"><i class="fas fa-shield-halved"></i></div>
+      <div class="text-violet-400 text-xs font-bold tracking-[3px] uppercase mb-3">Restricted Access</div>
+      <h1 class="text-3xl md:text-4xl font-black">Admin <span class="gradient-text">Login</span></h1>
+      <p class="text-slate-400 mt-3">Sign in with your administrator account to continue.</p>
     </div>
-  </div>
-
-  <!-- STATS -->
-  <div class="grid sm:grid-cols-3 gap-5 mb-10">
-    <div class="glass rounded-2xl p-6">
-      <div class="text-slate-400 text-sm">Total Offers</div>
-      <div class="text-3xl font-black mt-2" id="totalOffers">0</div>
-    </div>
-    <div class="glass rounded-2xl p-6">
-      <div class="text-slate-400 text-sm">Active Offers</div>
-      <div class="text-3xl font-black text-emerald-400 mt-2" id="activeOffers">0</div>
-    </div>
-    <div class="glass rounded-2xl p-6">
-      <div class="text-slate-400 text-sm">Inactive Offers</div>
-      <div class="text-3xl font-black text-amber-400 mt-2" id="inactiveOffers">0</div>
-    </div>
-  </div>
-
-  <!-- ADD OFFER -->
-  <section class="glass rounded-3xl p-6 md:p-9 mb-10">
-    <div class="flex items-center gap-4 mb-8">
-      <div class="w-12 h-12 rounded-xl bg-violet-500/20 text-violet-300 flex items-center justify-center text-xl">
-        <i class="fas fa-bullhorn"></i>
+    <form id="loginForm" class="glass rounded-3xl p-7 md:p-9 space-y-5">
+      <div>
+        <label for="loginEmail" class="block text-sm font-semibold mb-2">Admin Email</label>
+        <input id="loginEmail" class="field" type="email" autocomplete="username" placeholder="Enter admin email" required maxlength="254">
       </div>
       <div>
-        <h2 class="text-xl font-bold">Offer Manager</h2>
-        <p class="text-sm text-slate-400 mt-1">Create a promotion for your homepage hero section.</p>
+        <label for="loginPassword" class="block text-sm font-semibold mb-2">Password</label>
+        <input id="loginPassword" class="field" type="password" autocomplete="current-password" placeholder="Enter password" required maxlength="128">
       </div>
-    </div>
-
-    <form id="offerForm" class="space-y-5">
-      <input type="hidden" id="offerId">
-
-      <div class="grid md:grid-cols-2 gap-5">
-        <div>
-          <label class="block text-sm font-semibold mb-2">Offer Title *</label>
-          <input id="offerTitle" class="field" type="text" maxlength="80" placeholder="Example: Special Pro Membership Offer" required>
-        </div>
-
-        <div>
-          <label class="block text-sm font-semibold mb-2">Offer Badge *</label>
-          <input id="offerBadge" class="field" type="text" maxlength="35" placeholder="Example: LIMITED TIME OFFER" required>
-        </div>
-      </div>
-
-      <div>
-        <label class="block text-sm font-semibold mb-2">Offer Description *</label>
-        <textarea id="offerDescription" class="field" rows="3" maxlength="250" placeholder="Write a short description of your offer..." required></textarea>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-5">
-        <div>
-          <label class="block text-sm font-semibold mb-2">Button Text</label>
-          <input id="offerButton" class="field" type="text" maxlength="30" placeholder="Example: Claim Offer">
-        </div>
-
-        <div>
-          <label class="block text-sm font-semibold mb-2">Button Link</label>
-          <input id="offerLink" class="field" type="text" maxlength="300" placeholder="membership.html">
-        </div>
-      </div>
-
-      <label class="flex items-center gap-3 text-sm text-slate-300">
-        <input id="offerActive" type="checkbox" checked class="w-4 h-4 accent-violet-500">
-        Display this offer on the homepage
-      </label>
-
-      <div class="flex flex-col sm:flex-row gap-3 pt-3">
-        <button id="saveButton" type="submit" class="btn-gradient rounded-xl px-7 py-3.5 font-bold">
-          <i class="fas fa-plus mr-2"></i> Save Offer
-        </button>
-        <button id="cancelEdit" type="button" class="hidden border border-slate-600 rounded-xl px-7 py-3.5 font-semibold hover:bg-white/5">
-          Cancel Edit
-        </button>
-        <button id="clearForm" type="button" class="border border-slate-600 rounded-xl px-7 py-3.5 font-semibold hover:bg-white/5">
-          Clear Form
-        </button>
-      </div>
-    </form>
-    <p id="formMessage" class="text-sm mt-5 hidden" role="status" aria-live="polite"></p>
-  </section>
-
-  <!-- OFFERS LIST -->
-  <section>
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-      <div>
-        <h2 class="text-2xl font-extrabold">Your Offers</h2>
-        <p class="text-sm text-slate-400 mt-2">Edit, activate, deactivate or remove promotions.</p>
-      </div>
-      <button id="refreshOffers" class="border border-slate-600 px-4 py-2.5 rounded-xl text-sm hover:bg-white/5">
-        <i class="fas fa-rotate mr-2"></i> Refresh
+      <button id="loginButton" type="submit" class="btn-gradient w-full rounded-xl px-6 py-3.5 font-bold">
+        <i class="fas fa-lock mr-2"></i> Secure Admin Login
       </button>
-    </div>
-
-    <div id="offersList" class="grid md:grid-cols-2 gap-5"></div>
-
-    <div id="emptyState" class="glass rounded-2xl p-12 text-center">
-      <i class="fas fa-tags text-4xl text-slate-600 mb-5"></i>
-      <h3 class="text-lg font-bold">No offers created yet</h3>
-      <p class="text-sm text-slate-500 mt-2">Create your first offer using the form above.</p>
-    </div>
+      <p id="loginMessage" class="status" role="status" aria-live="polite"></p>
+      <p class="text-xs text-slate-500 leading-6">Access is granted only when the backend confirms that this account has the admin role.</p>
+    </form>
   </section>
 
+  <!-- DASHBOARD -->
+  <section id="dashboardView" class="hidden-view">
+    <div class="mb-10">
+      <div class="text-violet-400 text-xs font-bold tracking-[3px] uppercase mb-3">Management Center</div>
+      <h1 class="text-3xl md:text-4xl font-black">Admin <span class="gradient-text">Dashboard</span></h1>
+      <p class="text-slate-400 mt-3">Manage platform offers and review live database statistics.</p>
+      <p id="welcomeText" class="text-sm text-violet-300 mt-3"></p>
+    </div>
+
+    <div id="dashboardMessage" class="hidden glass rounded-2xl p-4 mb-7 text-sm" role="status" aria-live="polite"></div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+      <div class="glass rounded-2xl p-6"><div class="text-slate-400 text-sm">Registered Users</div><div class="text-3xl font-black mt-2" id="totalUsers">—</div></div>
+      <div class="glass rounded-2xl p-6"><div class="text-slate-400 text-sm">Total Logins</div><div class="text-3xl font-black mt-2" id="totalLogins">—</div></div>
+      <div class="glass rounded-2xl p-6"><div class="text-slate-400 text-sm">Tool Uses</div><div class="text-3xl font-black text-emerald-400 mt-2" id="totalToolUses">—</div></div>
+      <div class="glass rounded-2xl p-6"><div class="text-slate-400 text-sm">Unique Tools Used</div><div class="text-3xl font-black text-cyan-300 mt-2" id="totalTools">—</div></div>
+    </div>
+
+    <section class="glass rounded-3xl p-6 md:p-9 mb-10">
+      <div class="flex items-center gap-4 mb-8">
+        <div class="w-12 h-12 rounded-xl bg-violet-500/20 text-violet-300 flex items-center justify-center text-xl"><i class="fas fa-bullhorn"></i></div>
+        <div><h2 class="text-xl font-bold">Offer Manager</h2><p class="text-sm text-slate-400 mt-1">Offers are saved in MongoDB and shown to all visitors when active.</p></div>
+      </div>
+      <form id="offerForm" class="space-y-5">
+        <input type="hidden" id="offerId">
+        <div class="grid md:grid-cols-2 gap-5">
+          <div><label for="offerTitle" class="block text-sm font-semibold mb-2">Offer Title *</label><input id="offerTitle" class="field" type="text" maxlength="150" placeholder="Example: Special Pro Membership Offer" required></div>
+          <div><label for="offerBadge" class="block text-sm font-semibold mb-2">Offer Badge</label><input id="offerBadge" class="field" type="text" maxlength="50" placeholder="Example: LIMITED TIME OFFER"></div>
+        </div>
+        <div><label for="offerDescription" class="block text-sm font-semibold mb-2">Offer Description</label><textarea id="offerDescription" class="field" rows="3" maxlength="1000" placeholder="Write a short description of your offer..."></textarea></div>
+        <div><label for="offerLink" class="block text-sm font-semibold mb-2">Button Link</label><input id="offerLink" class="field" type="text" maxlength="500" placeholder="membership.html or https://example.com"></div>
+        <div class="grid md:grid-cols-2 gap-5">
+          <div><label for="offerStart" class="block text-sm font-semibold mb-2">Start Date (optional)</label><input id="offerStart" class="field" type="datetime-local"></div>
+          <div><label for="offerEnd" class="block text-sm font-semibold mb-2">End Date (optional)</label><input id="offerEnd" class="field" type="datetime-local"></div>
+        </div>
+        <label class="flex items-center gap-3 text-sm text-slate-300"><input id="offerActive" type="checkbox" checked class="w-4 h-4 accent-violet-500"> Display this offer on the homepage</label>
+        <div class="flex flex-col sm:flex-row gap-3 pt-3">
+          <button id="saveButton" type="submit" class="btn-gradient rounded-xl px-7 py-3.5 font-bold"><i class="fas fa-plus mr-2"></i> Save Offer</button>
+          <button id="cancelEdit" type="button" class="hidden-view border border-slate-600 rounded-xl px-7 py-3.5 font-semibold hover:bg-white/5">Cancel Edit</button>
+          <button id="clearForm" type="button" class="border border-slate-600 rounded-xl px-7 py-3.5 font-semibold hover:bg-white/5">Clear Form</button>
+        </div>
+      </form>
+      <p id="formMessage" class="status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="mb-10">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div><h2 class="text-2xl font-extrabold">Database Offers</h2><p class="text-sm text-slate-400 mt-2">Manage offers stored on the server.</p></div>
+        <button id="refreshOffers" class="border border-slate-600 px-4 py-2.5 rounded-xl text-sm hover:bg-white/5"><i class="fas fa-rotate mr-2"></i> Refresh</button>
+      </div>
+      <div class="grid sm:grid-cols-3 gap-5 mb-6">
+        <div class="glass rounded-2xl p-5"><div class="text-slate-400 text-sm">Total Offers</div><div id="totalOffers" class="text-2xl font-black mt-2">0</div></div>
+        <div class="glass rounded-2xl p-5"><div class="text-slate-400 text-sm">Active Offers</div><div id="activeOffers" class="text-2xl font-black text-emerald-400 mt-2">0</div></div>
+        <div class="glass rounded-2xl p-5"><div class="text-slate-400 text-sm">Inactive Offers</div><div id="inactiveOffers" class="text-2xl font-black text-amber-400 mt-2">0</div></div>
+      </div>
+      <div id="offersList" class="grid md:grid-cols-2 gap-5"></div>
+      <div id="emptyState" class="glass rounded-2xl p-12 text-center hidden-view"><i class="fas fa-tags text-4xl text-slate-600 mb-5"></i><h3 class="text-lg font-bold">No offers created yet</h3><p class="text-sm text-slate-500 mt-2">Create your first offer using the form above.</p></div>
+    </section>
+
+    <section class="grid lg:grid-cols-2 gap-6">
+      <div class="glass rounded-2xl p-6">
+        <h2 class="text-lg font-bold mb-4">Recent Registered Users</h2><div id="recentUsers" class="space-y-3 text-sm text-slate-300"><p class="text-slate-500">Loading...</p></div>
+      </div>
+      <div class="glass rounded-2xl p-6">
+        <h2 class="text-lg font-bold mb-4">Popular Tools</h2><div id="popularTools" class="space-y-3 text-sm text-slate-300"><p class="text-slate-500">Loading...</p></div>
+      </div>
+    </section>
+  </section>
 </main>
 
-<footer class="border-t border-white/10 py-8 mt-16 text-center text-xs text-slate-500">
-  © <span id="year"></span> ProTools. Admin Dashboard.
-</footer>
+<footer class="border-t border-white/10 py-8 mt-16 text-center text-xs text-slate-500">© <span id="year"></span> ProTools. Admin Dashboard.</footer>
 
 <script>
-  const STORAGE_KEY = 'protools_homepage_offers_v1';
+(() => {
+  "use strict";
 
-  const form = document.getElementById('offerForm');
-  const list = document.getElementById('offersList');
-  const emptyState = document.getElementById('emptyState');
-  const message = document.getElementById('formMessage');
+  // These API prefixes match the Express route mounts in the ProTools backend.
+  const API_BASE = "https://protools-backend.onrender.com/api";
+  const TOKEN_KEY = "protools_admin_token";
 
-  function getOffers() {
+  const $ = id => document.getElementById(id);
+  const loginView = $("loginView");
+  const dashboardView = $("dashboardView");
+  const loginForm = $("loginForm");
+  const offerForm = $("offerForm");
+  let offers = [];
+
+  function setMessage(element, text, success = true) {
+    element.textContent = text || "";
+    element.className = "status " + (success ? "text-emerald-400" : "text-red-400");
+  }
+
+  function token() {
+    return sessionStorage.getItem(TOKEN_KEY);
+  }
+
+  function showLogin(message = "") {
+    dashboardView.classList.add("hidden-view");
+    loginView.classList.remove("hidden-view");
+    $("logoutBtn").classList.add("hidden-view");
+    if (message) setMessage($("loginMessage"), message, false);
+  }
+
+  function showDashboard(user) {
+    loginView.classList.add("hidden-view");
+    dashboardView.classList.remove("hidden-view");
+    $("logoutBtn").classList.remove("hidden-view");
+    $("welcomeText").textContent = user && user.name ? "Signed in as " + user.name + " (Administrator)" : "Administrator access verified.";
+  }
+
+  async function api(path, options = {}) {
+    const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
+    if (token()) headers.Authorization = "Bearer " + token();
+    const response = await fetch(API_BASE + path, { ...options, headers });
+    let data = {};
+    try { data = await response.json(); } catch (_) {}
+    if (response.status === 401 || response.status === 403) {
+      sessionStorage.removeItem(TOKEN_KEY);
+      showLogin("Your admin session expired or access was denied. Please sign in again.");
+      throw new Error(data.message || "Admin authorization failed.");
+    }
+    if (!response.ok || data.success === false) throw new Error(data.message || "Request failed (" + response.status + ").");
+    return data;
+  }
+
+  async function login(email, password) {
+    const data = await api("/auth/login", {
+      method: "POST",
+      headers: {},
+      body: JSON.stringify({ email, password })
+    });
+    if (!data.token || !data.user || data.user.role !== "admin") {
+      throw new Error("This account does not have administrator access.");
+    }
+    sessionStorage.setItem(TOKEN_KEY, data.token);
+    return data.user;
+  }
+
+  async function verifySession() {
+    if (!token()) return showLogin();
     try {
-      const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-      return Array.isArray(data) ? data : [];
-    } catch {
-      return [];
+      const data = await api("/auth/me");
+      if (!data.user || data.user.role !== "admin") {
+        sessionStorage.removeItem(TOKEN_KEY);
+        return showLogin("This account is not an administrator.");
+      }
+      showDashboard(data.user);
+      await loadDashboard();
+    } catch (error) {
+      if (token()) showLogin(error.message);
     }
   }
 
-  function saveOffers(offers) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(offers));
+  async function loadDashboard() {
+    $("dashboardMessage").classList.add("hidden-view");
+    const [overviewResult, offersResult] = await Promise.allSettled([
+      api("/admin/overview"),
+      api("/offers/all")
+    ]);
+
+    if (overviewResult.status === "fulfilled") {
+      const d = overviewResult.value;
+      const stats = d.stats || {};
+      $("totalUsers").textContent = stats.totalUsers ?? 0;
+      $("totalLogins").textContent = stats.totalLogins ?? 0;
+      $("totalToolUses").textContent = stats.totalToolUses ?? 0;
+      $("totalTools").textContent = stats.totalTools ?? 0;
+      renderSimpleList("recentUsers", d.recentUsers || [], u => (u.name || "User") + " · " + (u.email || ""));
+      renderSimpleList("popularTools", d.popularTools || [], t => (t.name || t._id || "Tool") + " · " + (t.uses || 0) + " uses");
+    } else {
+      showDashboardError("Could not load overview: " + overviewResult.reason.message);
+    }
+
+    if (offersResult.status === "fulfilled") {
+      offers = offersResult.value.offers || [];
+      renderOffers();
+    } else {
+      showDashboardError("Could not load offers: " + offersResult.reason.message);
+    }
   }
 
-  function showMessage(text, success = true) {
-    message.textContent = text;
-    message.className = 'text-sm mt-5 ' + (success ? 'text-emerald-400' : 'text-red-400');
+  function showDashboardError(text) {
+    const box = $("dashboardMessage");
+    box.textContent = text;
+    box.className = "glass rounded-2xl p-4 mb-7 text-sm text-amber-300";
   }
 
-  function resetForm() {
-    form.reset();
-    document.getElementById('offerId').value = '';
-    document.getElementById('offerActive').checked = true;
-    document.getElementById('saveButton').innerHTML = '<i class="fas fa-plus mr-2"></i> Save Offer';
-    document.getElementById('cancelEdit').classList.add('hidden');
-    message.classList.add('hidden');
-  }
-
-  function updateStats(offers) {
-    document.getElementById('totalOffers').textContent = offers.length;
-    document.getElementById('activeOffers').textContent = offers.filter(o => o.active).length;
-    document.getElementById('inactiveOffers').textContent = offers.filter(o => !o.active).length;
+  function renderSimpleList(id, items, formatter) {
+    const root = $(id);
+    root.replaceChildren();
+    if (!items.length) {
+      const p = document.createElement("p"); p.className = "text-slate-500"; p.textContent = "No records yet."; root.appendChild(p); return;
+    }
+    items.forEach(item => {
+      const p = document.createElement("p"); p.className = "border-b border-white/10 pb-3"; p.textContent = formatter(item); root.appendChild(p);
+    });
   }
 
   function renderOffers() {
-    const offers = getOffers();
+    const list = $("offersList");
     list.replaceChildren();
-    emptyState.classList.toggle('hidden', offers.length > 0);
-    updateStats(offers);
+    $("emptyState").classList.toggle("hidden-view", offers.length > 0);
+    $("totalOffers").textContent = offers.length;
+    $("activeOffers").textContent = offers.filter(o => o.isActive).length;
+    $("inactiveOffers").textContent = offers.filter(o => !o.isActive).length;
 
     offers.forEach(offer => {
-      const card = document.createElement('article');
-      card.className = 'offer-card rounded-2xl p-6';
-
-      const badge = document.createElement('span');
-      badge.className = 'inline-block text-xs font-bold tracking-wide text-violet-300 bg-violet-500/15 rounded-full px-3 py-2 mb-4';
-      badge.textContent = offer.badge;
-
-      const title = document.createElement('h3');
-      title.className = 'text-lg font-bold mb-2';
-      title.textContent = offer.title;
-
-      const description = document.createElement('p');
-      description.className = 'text-sm text-slate-400 leading-6 mb-5';
-      description.textContent = offer.description;
-
-      const status = document.createElement('span');
-      status.className = 'inline-flex text-xs font-bold rounded-full px-3 py-1 ' +
-        (offer.active ? 'bg-emerald-500/15 text-emerald-400' : 'bg-amber-500/15 text-amber-400');
-      status.textContent = offer.active ? 'ACTIVE' : 'INACTIVE';
-
-      const actions = document.createElement('div');
-      actions.className = 'flex flex-wrap gap-2 mt-5';
-
-      const edit = document.createElement('button');
-      edit.type = 'button';
-      edit.className = 'px-4 py-2 rounded-lg bg-violet-500/20 text-violet-300 text-xs font-bold';
-      edit.textContent = 'Edit';
-      edit.addEventListener('click', () => editOffer(offer.id));
-
-      const toggle = document.createElement('button');
-      toggle.type = 'button';
-      toggle.className = 'px-4 py-2 rounded-lg bg-slate-700 text-white text-xs font-bold';
-      toggle.textContent = offer.active ? 'Deactivate' : 'Activate';
-      toggle.addEventListener('click', () => toggleOffer(offer.id));
-
-      const remove = document.createElement('button');
-      remove.type = 'button';
-      remove.className = 'px-4 py-2 rounded-lg bg-red-500/15 text-red-400 text-xs font-bold';
-      remove.textContent = 'Delete';
-      remove.addEventListener('click', () => deleteOffer(offer.id));
-
+      const card = document.createElement("article");
+      card.className = "offer-card rounded-2xl p-6";
+      const badge = document.createElement("span");
+      badge.className = "inline-block text-xs font-bold tracking-wide text-violet-300 bg-violet-500/15 rounded-full px-3 py-2 mb-4";
+      badge.textContent = offer.badge || "SPECIAL OFFER";
+      const title = document.createElement("h3"); title.className = "text-lg font-bold mb-2"; title.textContent = offer.title || "";
+      const description = document.createElement("p"); description.className = "text-sm text-slate-400 leading-6 mb-5"; description.textContent = offer.description || "";
+      const status = document.createElement("span");
+      status.className = "inline-flex text-xs font-bold rounded-full px-3 py-1 " + (offer.isActive ? "bg-emerald-500/15 text-emerald-400" : "bg-amber-500/15 text-amber-400");
+      status.textContent = offer.isActive ? "ACTIVE" : "INACTIVE";
+      const actions = document.createElement("div"); actions.className = "flex flex-wrap gap-2 mt-5";
+      const edit = makeButton("Edit", "px-4 py-2 rounded-lg bg-violet-500/20 text-violet-300 text-xs font-bold", () => editOffer(offer));
+      const toggle = makeButton(offer.isActive ? "Deactivate" : "Activate", "px-4 py-2 rounded-lg bg-slate-700 text-white text-xs font-bold", () => toggleOffer(offer));
+      const remove = makeButton("Delete", "px-4 py-2 rounded-lg bg-red-500/15 text-red-400 text-xs font-bold", () => deleteOffer(offer));
       actions.append(edit, toggle, remove);
       card.append(badge, title, description, status, actions);
       list.appendChild(card);
     });
   }
 
-  function editOffer(id) {
-    const offer = getOffers().find(o => o.id === id);
-    if (!offer) return;
-
-    document.getElementById('offerId').value = offer.id;
-    document.getElementById('offerTitle').value = offer.title;
-    document.getElementById('offerBadge').value = offer.badge;
-    document.getElementById('offerDescription').value = offer.description;
-    document.getElementById('offerButton').value = offer.button || '';
-    document.getElementById('offerLink').value = offer.link || '';
-    document.getElementById('offerActive').checked = !!offer.active;
-
-    document.getElementById('saveButton').innerHTML = '<i class="fas fa-save mr-2"></i> Update Offer';
-    document.getElementById('cancelEdit').classList.remove('hidden');
-    showMessage('Editing offer. Make your changes and click Update Offer.');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  function makeButton(text, className, handler) {
+    const button = document.createElement("button");
+    button.type = "button"; button.className = className; button.textContent = text;
+    button.addEventListener("click", handler); return button;
   }
 
-  function toggleOffer(id) {
-    const offers = getOffers();
-    const offer = offers.find(o => o.id === id);
-    if (!offer) return;
-    offer.active = !offer.active;
-    saveOffers(offers);
-    renderOffers();
+  function toApiLink(value) {
+    if (!value) return "";
+    // Backend accepts only absolute HTTP/HTTPS URLs; resolve relative site links here.
+    const resolved = new URL(value, window.location.href);
+    if (!["http:", "https:"].includes(resolved.protocol)) throw new Error("Please enter a valid HTTP/HTTPS link.");
+    return resolved.href;
   }
 
-  function deleteOffer(id) {
-    if (!confirm('Are you sure you want to delete this offer?')) return;
-    const offers = getOffers().filter(o => o.id !== id);
-    saveOffers(offers);
-    renderOffers();
-    resetForm();
-    showMessage('Offer deleted successfully.');
+  function formPayload() {
+    const title = $("offerTitle").value.trim();
+    if (!title) throw new Error("Offer title is required.");
+    const startRaw = $("offerStart").value;
+    const endRaw = $("offerEnd").value;
+    if (startRaw && endRaw && new Date(endRaw) < new Date(startRaw)) throw new Error("End date must be after the start date.");
+    return {
+      title,
+      badge: $("offerBadge").value.trim(),
+      description: $("offerDescription").value.trim(),
+      link: toApiLink($("offerLink").value.trim()),
+      isActive: $("offerActive").checked,
+      startDate: startRaw ? new Date(startRaw).toISOString() : null,
+      endDate: endRaw ? new Date(endRaw).toISOString() : null
+    };
   }
 
-  form.addEventListener('submit', event => {
-    event.preventDefault();
+  function dateForInput(value) {
+    if (!value) return "";
+    const d = new Date(value);
+    if (Number.isNaN(d.getTime())) return "";
+    const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+    return local.toISOString().slice(0, 16);
+  }
 
-    const title = document.getElementById('offerTitle').value.trim();
-    const badge = document.getElementById('offerBadge').value.trim();
-    const description = document.getElementById('offerDescription').value.trim();
-    const button = document.getElementById('offerButton').value.trim() || 'Explore Offer';
-    const link = document.getElementById('offerLink').value.trim() || 'membership.html';
-    const active = document.getElementById('offerActive').checked;
-    const id = document.getElementById('offerId').value;
+  function editOffer(offer) {
+    $("offerId").value = offer._id;
+    $("offerTitle").value = offer.title || "";
+    $("offerBadge").value = offer.badge || "";
+    $("offerDescription").value = offer.description || "";
+    $("offerLink").value = offer.link || "";
+    $("offerActive").checked = !!offer.isActive;
+    $("offerStart").value = dateForInput(offer.startDate);
+    $("offerEnd").value = dateForInput(offer.endDate);
+    $("saveButton").innerHTML = '<i class="fas fa-save mr-2"></i> Update Offer';
+    $("cancelEdit").classList.remove("hidden-view");
+    setMessage($("formMessage"), "Editing offer. Update the fields and save.");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
-    if (!title || !badge || !description) {
-      showMessage('Please complete all required fields.', false);
-      return;
-    }
+  function resetForm() {
+    offerForm.reset();
+    $("offerId").value = "";
+    $("offerActive").checked = true;
+    $("saveButton").innerHTML = '<i class="fas fa-plus mr-2"></i> Save Offer';
+    $("cancelEdit").classList.add("hidden-view");
+    setMessage($("formMessage"), "");
+  }
 
-    if (/^\s*javascript:/i.test(link)) {
-      showMessage('Please enter a valid page link.', false);
-      return;
-    }
-
-    const offers = getOffers();
-
-    if (id) {
-      const index = offers.findIndex(o => o.id === id);
-      if (index === -1) {
-        showMessage('Offer not found. Please refresh and try again.', false);
-        return;
-      }
-      offers[index] = { ...offers[index], title, badge, description, button, link, active };
-    } else {
-      offers.unshift({
-        id: (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString()),
-        title, badge, description, button, link, active,
-        createdAt: new Date().toISOString()
-      });
-    }
-
+  async function toggleOffer(offer) {
     try {
-      saveOffers(offers);
-      resetForm();
-      renderOffers();
-      showMessage(id ? 'Offer updated successfully.' : 'New offer saved successfully.');
-    } catch {
-      showMessage('Could not save. Browser storage may be unavailable or full.', false);
+      await api("/offers/" + encodeURIComponent(offer._id), {
+        method: "PATCH", body: JSON.stringify({ isActive: !offer.isActive })
+      });
+      await loadDashboard();
+    } catch (error) { setMessage($("formMessage"), error.message, false); }
+  }
+
+  async function deleteOffer(offer) {
+    if (!confirm("Delete this offer permanently?")) return;
+    try {
+      await api("/offers/" + encodeURIComponent(offer._id), { method: "DELETE" });
+      if ($("offerId").value === offer._id) resetForm();
+      await loadDashboard();
+      setMessage($("formMessage"), "Offer deleted from database.");
+    } catch (error) { setMessage($("formMessage"), error.message, false); }
+  }
+
+  loginForm.addEventListener("submit", async event => {
+    event.preventDefault();
+    const button = $("loginButton");
+    button.disabled = true; button.textContent = "Checking credentials...";
+    setMessage($("loginMessage"), "");
+    try {
+      const user = await login($("loginEmail").value.trim(), $("loginPassword").value);
+      $("loginPassword").value = "";
+      showDashboard(user);
+      await loadDashboard();
+    } catch (error) {
+      sessionStorage.removeItem(TOKEN_KEY);
+      setMessage($("loginMessage"), error.message, false);
+    } finally {
+      button.disabled = false;
+      button.innerHTML = '<i class="fas fa-lock mr-2"></i> Secure Admin Login';
     }
   });
 
-  document.getElementById('clearForm').addEventListener('click', resetForm);
-  document.getElementById('cancelEdit').addEventListener('click', resetForm);
-  document.getElementById('refreshOffers').addEventListener('click', renderOffers);
-
-  document.getElementById('menuBtn').addEventListener('click', () => {
-    const menu = document.getElementById('mobileMenu');
-    const open = menu.classList.toggle('open');
-    document.getElementById('menuBtn').setAttribute('aria-expanded', String(open));
+  offerForm.addEventListener("submit", async event => {
+    event.preventDefault();
+    const id = $("offerId").value;
+    const button = $("saveButton");
+    button.disabled = true;
+    try {
+      const payload = formPayload();
+      if (id) {
+        await api("/offers/" + encodeURIComponent(id), { method: "PATCH", body: JSON.stringify(payload) });
+      } else {
+        await api("/offers", { method: "POST", body: JSON.stringify(payload) });
+      }
+      resetForm();
+      await loadDashboard();
+      setMessage($("formMessage"), id ? "Offer updated in MongoDB." : "Offer saved to MongoDB.");
+    } catch (error) {
+      setMessage($("formMessage"), error.message, false);
+    } finally {
+      button.disabled = false;
+    }
   });
 
-  document.getElementById('year').textContent = new Date().getFullYear();
-  renderOffers();
-</script>
+  $("clearForm").addEventListener("click", resetForm);
+  $("cancelEdit").addEventListener("click", resetForm);
+  $("refreshOffers").addEventListener("click", loadDashboard);
+  $("logoutBtn").addEventListener("click", () => {
+    sessionStorage.removeItem(TOKEN_KEY);
+    resetForm();
+    showLogin("You have been logged out.");
+  });
 
+  $("year").textContent = new Date().getFullYear();
+  verifySession();
+})();
+</script>
 </body>
 </html>

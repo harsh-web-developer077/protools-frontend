@@ -130,6 +130,7 @@
       <div id="paymentsList" class="grid md:grid-cols-2 gap-5"></div>
     </section>
 
+<section class="glass rounded-3xl p-6 md:p-9 mb-10"><h2 class="text-2xl font-extrabold mb-2">Coupon Manager</h2><p class="text-sm text-slate-400 mb-6">Create, enable or disable membership discount codes.</p><form id="couponForm" class="grid md:grid-cols-2 gap-4"><input id="couponCodeNew" class="field" placeholder="Coupon code (e.g. SAVE20)" maxlength="24" required><select id="couponType" class="field"><option value="percent">Percentage (%)</option><option value="fixed">Fixed discount (₹)</option></select><input id="couponValue" class="field" type="number" min="1" max="100" placeholder="Discount value" required><input id="couponMaxUses" class="field" type="number" min="0" value="0" placeholder="Max uses (0 = unlimited)"><input id="couponExpiry" class="field" type="date"><div class="flex gap-4 items-center text-sm"><label><input id="couponMonthly" type="checkbox" checked> Monthly</label><label><input id="couponYearly" type="checkbox" checked> Yearly</label></div><button class="btn-gradient rounded-xl px-6 py-3 font-bold md:col-span-2" type="submit">Create Coupon</button></form><p id="couponAdminMessage" class="status"></p><div id="couponAdminList" class="grid md:grid-cols-2 gap-4 mt-5"></div></section>
     <section class="mb-10">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div><h2 class="text-2xl font-extrabold">Database Offers</h2><p class="text-sm text-slate-400 mt-2">Manage offers stored on the server.</p></div>
@@ -325,10 +326,13 @@
       );
       $("paymentsMessage").textContent = "Request updated.";
       await loadPayments();
+    await loadCoupons();
     } catch (error) {
       $("paymentsMessage").textContent = error.message;
     }
   }
+
+  async function loadCoupons(){try{const d=await api("/membership/admin/coupons"),root=$("couponAdminList");root.replaceChildren();(d.coupons||[]).forEach(c=>{const card=document.createElement("div");card.className="offer-card rounded-xl p-4";const p=document.createElement("p");p.className="font-bold";p.textContent=c.code+" · "+(c.type==="percent"?c.value+"%":"₹"+c.value)+" · uses "+c.usedCount+"/"+(c.maxUses||"∞");const b=makeButton(c.isActive?"Disable":"Enable","px-3 py-2 mt-3 rounded-lg bg-violet-500/20 text-violet-300 text-xs font-bold",async()=>{await api("/membership/admin/coupons/"+c._id,{method:"PATCH",body:JSON.stringify({isActive:!c.isActive})});await loadCoupons();});card.append(p,b);root.append(card);});}catch(e){$("couponAdminMessage").textContent=e.message;}}
 
   async function loadDashboard() {
     $("dashboardMessage").classList.add("hidden-view");
@@ -543,6 +547,8 @@
       setMessage($("formMessage"), error.message, false);
     }
   }
+
+  $("couponForm").addEventListener("submit",async e=>{e.preventDefault();try{const plans=[];if($("couponMonthly").checked)plans.push("monthly");if($("couponYearly").checked)plans.push("yearly");const expiry=$("couponExpiry").value;await api("/membership/admin/coupons",{method:"POST",body:JSON.stringify({code:$("couponCodeNew").value,type:$("couponType").value,value:Number($("couponValue").value),maxUses:Number($("couponMaxUses").value),expiresAt:expiry?new Date(expiry+"T23:59:59").toISOString():null,plans})});$("couponForm").reset();$("couponMonthly").checked=true;$("couponYearly").checked=true;$("couponMaxUses").value="0";$("couponAdminMessage").textContent="Coupon created successfully.";await loadCoupons();}catch(err){$("couponAdminMessage").textContent=err.message;}});
 
   loginForm.addEventListener("submit", async event => {
     event.preventDefault();

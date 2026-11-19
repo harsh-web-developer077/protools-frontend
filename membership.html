@@ -140,6 +140,7 @@
         <p class="text-slate-800 text-xs mt-2 font-semibold">Scan with a UPI app</p>
       </div>
       <div class="space-y-3">
+        <label class="block text-sm font-semibold" for="couponCode">Coupon code (optional)</label><div class="flex gap-2"><input id="couponCode" class="w-full rounded-lg bg-slate-900 border border-slate-700 px-3 py-2 text-white" placeholder="Enter coupon"><button id="applyCoupon" type="button" class="btn-gradient rounded-lg px-4 font-bold">Apply</button></div><p id="couponMessage" class="text-xs text-slate-400"></p><p id="priceBreakdown" class="text-xs text-slate-400"></p>
         <p class="text-sm text-slate-300">Pay the exact amount shown. After payment, enter the UTR/reference number below. Membership activates only after admin verifies the received payment.</p>
         <p id="upiAmount" class="text-3xl font-black gradient-text"></p>
         <p id="upiAddress" class="text-xs text-slate-400 break-all"></p>
@@ -164,7 +165,7 @@
   const UPI_ID = "YOUR_UPI_ID_HERE";
   const UPI_NAME = "ProTools";
   const plans = { monthly: { label: "Monthly Pro · ₹199 · 30 days", amount: 199 }, yearly: { label: "Yearly Pro · ₹999 · 365 days", amount: 999 } };
-  let selectedPlan = "monthly";
+  let selectedPlan = "monthly"; let appliedCoupon = "";
   const $ = id => document.getElementById(id);
 
   function getToken() {
@@ -182,7 +183,7 @@
     if (!plans[plan]) return;
     selectedPlan = plan;
     $("selectedPlanText").textContent = plans[plan].label;
-    $("upiAmount").textContent = "₹" + plans[plan].amount;
+    appliedCoupon = ""; $("couponCode").value = ""; $("couponMessage").textContent = ""; $("priceBreakdown").textContent = ""; $("upiAmount").textContent = "₹" + plans[plan].amount;
     $("paymentMessage").textContent = "";
     $("paymentUtr").value = "";
     const configured = UPI_ID && UPI_ID !== "YOUR_UPI_ID_HERE" && /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+$/.test(UPI_ID);
@@ -197,6 +198,8 @@
     $("paymentArea").scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
+  $("applyCoupon").addEventListener("click",async()=>{const token=getToken(),code=$("couponCode").value.trim(),msg=$("couponMessage");if(!token){msg.textContent="Please log in first.";return;}try{const r=await fetch(API_BASE+"/membership/coupons/validate",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+token},body:JSON.stringify({plan:selectedPlan,code})});const d=await r.json();if(!r.ok||!d.success)throw Error(d.message||"Invalid coupon.");appliedCoupon=d.code;$("upiAmount").textContent="₹"+d.amount;$("priceBreakdown").textContent="Original ₹"+d.base+" · Discount −₹"+d.discount+" · Pay ₹"+d.amount;msg.textContent="Coupon applied!";msg.className="text-xs text-emerald-400";}catch(e){appliedCoupon="";$("upiAmount").textContent="₹"+plans[selectedPlan].amount;$("priceBreakdown").textContent="";msg.textContent=e.message;msg.className="text-xs text-red-400";}});
+
   $("submitPayment").addEventListener("click", async () => {
     const msg = $("paymentMessage");
     const utr = $("paymentUtr").value.trim();
@@ -210,7 +213,7 @@
       const response = await fetch(API_BASE + "/membership/payments", {
         method: "POST",
         headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
-        body: JSON.stringify({ plan: selectedPlan, utr })
+        body: JSON.stringify({ plan: selectedPlan, utr, couponCode: appliedCoupon })
       });
       const data = await response.json();
       if (!response.ok || !data.success) throw new Error(data.message || "Could not submit request.");

@@ -207,7 +207,9 @@
     try { data = await response.json(); } catch (_) {}
 
     if (response.status === 401 || response.status === 403) {
-      sessionStorage.removeItem(TOKEN_KEY);\n    localStorage.removeItem("protools_token");\n    localStorage.removeItem("protools_user");
+      sessionStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem("protools_token");
+    localStorage.removeItem("protools_user");
       showLogin("Your admin session expired or access was denied. Please sign in again.");
       throw new Error(data.message || "Admin authorization failed.");
     }
@@ -229,7 +231,9 @@
       throw new Error("This account does not have administrator access.");
     }
 
-    sessionStorage.setItem(TOKEN_KEY, data.token);\n    localStorage.setItem("protools_token", data.token);\n    localStorage.setItem("protools_user", JSON.stringify(data.user));
+    sessionStorage.setItem(TOKEN_KEY, data.token);
+    localStorage.setItem("protools_token", data.token);
+    localStorage.setItem("protools_user", JSON.stringify(data.user));
     return data.user;
   }
 
@@ -239,7 +243,9 @@
     try {
       const data = await api("/auth/me");
       if (!data.user || data.user.role !== "admin") {
-        sessionStorage.removeItem(TOKEN_KEY);\n    localStorage.removeItem("protools_token");\n    localStorage.removeItem("protools_user");
+        sessionStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem("protools_token");
+    localStorage.removeItem("protools_user");
         return showLogin("This account is not an administrator.");
       }
       showDashboard(data.user);
@@ -563,7 +569,9 @@
       showDashboard(user);
       await loadDashboard();
     } catch (error) {
-      sessionStorage.removeItem(TOKEN_KEY);\n    localStorage.removeItem("protools_token");\n    localStorage.removeItem("protools_user");
+      sessionStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem("protools_token");
+    localStorage.removeItem("protools_user");
       setMessage($("loginMessage"), error.message, false);
     } finally {
       button.disabled = false;
@@ -607,7 +615,9 @@
   $("refreshPayments").addEventListener("click", loadPayments);
 
   $("logoutBtn").addEventListener("click", () => {
-    sessionStorage.removeItem(TOKEN_KEY);\n    localStorage.removeItem("protools_token");\n    localStorage.removeItem("protools_user");
+    sessionStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem("protools_token");
+    localStorage.removeItem("protools_user");
     resetForm();
     showLogin("You have been logged out.");
   });

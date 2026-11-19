@@ -54,6 +54,8 @@ input{outline:none}input:focus{border-color:#a78bfa!important;box-shadow:0 0 0 3
     </div>
    </div>
    <div class="mt-6 border-t border-white/10 pt-5">
+    <label for="payerName" class="block text-sm font-semibold mb-2">Payer name (optional)</label>
+    <input id="payerName" class="w-full rounded-xl bg-[#171329] border border-slate-600 px-4 py-3 text-white mb-4" maxlength="80" placeholder="Name shown in payment app" autocomplete="name">
     <label for="paymentUtr" class="block text-sm font-semibold mb-2">UPI UTR / reference number</label>
     <input id="paymentUtr" class="w-full rounded-xl bg-[#171329] border border-slate-600 px-4 py-3 text-white" maxlength="30" minlength="8" placeholder="Available after payment setup" disabled>
     <button id="submitPayment" disabled class="btn-gradient opacity-50 cursor-not-allowed w-full rounded-xl py-3 font-bold mt-4">Payment setup pending</button>
@@ -113,7 +115,7 @@ $("submitPayment").addEventListener("click",async()=>{
  if(!t){msg.textContent="Please log in first.";msg.className="text-sm text-amber-300";return;}
  if(!/^[A-Za-z0-9-]{8,30}$/.test(utr)){msg.textContent="Enter a valid UTR/reference number.";msg.className="text-sm text-red-400";return;}
  const b=$("submitPayment");b.disabled=true;b.textContent="Submitting...";
- try{const r=await fetch(API+"/membership/payments",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+t},body:JSON.stringify({plan,utr,couponCode:coupon})});const d=await r.json();if(!r.ok||!d.success)throw Error(d.message||"Could not submit request.");msg.textContent="Request submitted. Admin will independently verify payment before activation.";msg.className="text-sm text-emerald-400";$("paymentUtr").value="";}
+ try{const r=await fetch(API+"/membership/payments",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+t},body:JSON.stringify({plan,utr,couponCode:coupon,payerName:document.getElementById("payerName").value.trim()})});const d=await r.json();if(!r.ok||!d.success)throw Error(d.message||"Could not submit request.");msg.textContent="Request submitted. Admin will independently verify payment before activation.";msg.className="text-sm text-emerald-400";$("paymentUtr").value="";}
  catch(e){msg.textContent=e.message;msg.className="text-sm text-red-400";}
  finally{b.disabled=false;b.textContent="Submit payment request";}
 });
